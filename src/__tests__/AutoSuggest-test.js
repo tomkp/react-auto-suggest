@@ -27,7 +27,7 @@ describe('AutoSuggest', function() {
 
 
     it('DropDown displayed when text is entered', function() {
-        console.info('DropDown not displayed');
+        console.info('DropDown displayed when text is entered');
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
         TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
