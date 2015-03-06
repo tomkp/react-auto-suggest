@@ -11,16 +11,27 @@ describe('AutoSuggest', function() {
         <AutoSuggest />
     );
 
+
     it('renders', function() {
         console.info('renders');
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
         expect(searchBox.getDOMNode().textContent).toEqual('');
     });
 
+
     it('DropDown not displayed', function() {
         console.info('DropDown not displayed');
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
         expect(dropDown.getDOMNode().style.display).toEqual('none');
+    });
+
+
+    it('DropDown displayed when text is entered', function() {
+        console.info('DropDown not displayed');
+        var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
+        var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+        expect(dropDown.getDOMNode().style.display).toEqual('block');
     });
 
 

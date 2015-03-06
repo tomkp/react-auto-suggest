@@ -30,7 +30,7 @@ let SearchBox = React.createClass({
 
 
     handleChange(event) {
-        console.info('SearchBox.handleChange', event, event.keyCode);
+        console.info('SearchBox.handleChange', event.target.value);
         this.setState({
             value: event.target.value
         });
