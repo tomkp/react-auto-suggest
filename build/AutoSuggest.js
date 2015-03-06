@@ -4,91 +4,11 @@ var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["defau
 
 var React = _interopRequire(require("react"));
 
+var SearchBox = _interopRequire(require("./SearchBox"));
+
+var DropDown = _interopRequire(require("./DropDown"));
+
 var suggestions = ["chicken", "duck", "elephant", "zebra", "penguin", "dog", "cat", "crocodile"];
-
-var SearchBox = React.createClass({
-    displayName: "SearchBox",
-
-    getInitialState: function getInitialState() {
-        return {
-            value: ""
-        };
-    },
-
-    componentDidMount: function componentDidMount() {
-        this.refs.searchBox.getDOMNode().focus();
-    },
-
-    keyDown: function keyDown(event) {
-        console.info("SearchBox.keyDown");
-        var keys = [13, 27, 38, 39, 40];
-        if (keys.indexOf(event.keyCode) !== -1) {
-            this.props.handleSpecial(event.keyCode);
-        }
-    },
-
-    handleChange: function handleChange(event) {
-        console.info("SearchBox.handleChange", event, event.keyCode);
-        this.setState({
-            value: event.target.value
-        });
-        var keys = [13, 27, 38, 39, 40];
-        if (keys.indexOf(event.keyCode) === -1) {
-            var inputtedTerm = this.refs.searchBox.getDOMNode().value;
-            this.props.handleTerm(inputtedTerm);
-        }
-    },
-
-    render: function render() {
-        console.info("SearchBox.render");
-        return React.createElement("input", { ref: "searchBox",
-            className: "SearchBox",
-            onKeyDown: this.keyDown,
-            onChange: this.handleChange,
-            value: this.props.displayTerm });
-    }
-});
-
-var DropDown = React.createClass({
-    displayName: "DropDown",
-
-    handleClick: function handleClick(event) {
-        console.info("DropDown.handleClick");
-        var suggestion = event.target.getAttribute("data-suggestion");
-        this.props.handleClick(suggestion);
-    },
-
-    render: function render() {
-        var _this = this;
-
-        console.info("DropDown.render", this.props.suggestions);
-        var index = this.props.index;
-        var entries = this.props.suggestions.map(function (suggestion, i) {
-            var classes = ["suggestion"];
-            if (i === index) {
-                classes.push("selected");
-            }
-            return React.createElement(
-                "div",
-                { className: classes.join(" "),
-                    onClick: _this.handleClick,
-                    "data-suggestion": suggestion,
-                    key: suggestion },
-                suggestion
-            );
-        });
-
-        var styles = {
-            display: this.props.display ? "block" : "none"
-        };
-
-        return React.createElement(
-            "div",
-            { className: "DropDown", style: styles },
-            entries
-        );
-    }
-});
 
 var AutoSuggest = React.createClass({
     displayName: "AutoSuggest",
