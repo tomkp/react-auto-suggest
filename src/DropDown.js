@@ -37,4 +37,4 @@ let DropDown = React.createClass({
 });
 
 
-module.exports = DropDown;
+export default DropDown;

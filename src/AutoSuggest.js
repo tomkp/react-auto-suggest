@@ -115,4 +115,4 @@ let AutoSuggest = React.createClass({
 });
 
 
-module.exports = AutoSuggest;
+export default AutoSuggest;
