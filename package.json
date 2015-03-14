@@ -13,6 +13,9 @@
     "react-component",
     "auto-suggest"
   ],
+  "dependencies": {
+    "react": "^0.13.0-rc1"
+  },
   "devDependencies": {
     "babel-core": "^4.6.6",
     "babel-jest": "^4.0.0",
@@ -23,18 +26,21 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "browserify src/AutoSuggest.js -t babelify --outfile dist/AutoSuggest.js",
-    "demo": "browserify demo/Example.js -t babelify --outfile demo/bundle.js"
-  },
-  "dependencies": {
-    "moment": "^2.9.0",
-    "react": "^0.13.0-rc1"
+    "build": "browserify src/AutoSuggest.js -t -o dist/AutoSuggest.js",
+    "demo": "browserify demo/Example.js -t -o demo/bundle.js"
   },
   "jest": {
     "rootDir": "./src",
     "scriptPreprocessor": "../preprocessor.js",
     "unmockedModulePathPatterns": [
       "react"
+    ]
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify"
+      ]
     ]
   }
 }
