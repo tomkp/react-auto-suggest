@@ -26,7 +26,7 @@
     "react-tools": "^0.13.0-rc1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest ./src/__tests__",
     "build": "browserify src/AutoSuggest.js -t -o dist/AutoSuggest.js",
     "demo": "browserify demo/Example.js -t -o demo/bundle.js"
   },
