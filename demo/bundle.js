@@ -19741,6 +19741,7 @@ var AutoSuggest = React.createClass({
     displayName: "AutoSuggest",
 
     propTypes: {
+        suggestions: React.PropTypes.func.isRequired,
         onSuggestion: React.PropTypes.func.isRequired
     },
 
@@ -19913,10 +19914,12 @@ var SearchBox = React.createClass({
     },
 
     handleChange: function handleChange(event) {
-        console.info("SearchBox.handleChange", event.target.value);
+        var keyCode = event.keyCode;
+        console.info("SearchBox.handleChange", event.target.value, keyCode);
         var keys = [13, 27, 38, 39, 40];
-        if (keys.indexOf(event.keyCode) === -1) {
-            var inputtedTerm = this.refs.searchBox.getDOMNode().value;
+        if (keys.indexOf(keyCode) === -1) {
+            //let inputtedTerm = this.refs.searchBox.getDOMNode().value;
+            var inputtedTerm = event.target.value;
             this.props.handleTerm(inputtedTerm);
         }
     },
