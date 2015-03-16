@@ -22,26 +22,36 @@ describe('AutoSuggest', function() {
     );
 
 
-    it('renders', function() {
-        console.info('renders');
+    it('should render', function() {
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
         expect(searchBox.getDOMNode().textContent).toEqual('');
     });
 
 
-    it('DropDown not displayed', function() {
-        console.info('DropDown not displayed');
+    it('should display the DropDown', function() {
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
         expect(dropDown.getDOMNode().style.display).toEqual('none');
     });
 
 
-    it('DropDown displayed when text is entered', function() {
-        console.info('DropDown displayed when text is entered');
+    it('should display the DropDown when text is entered', function() {
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
         TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
         expect(dropDown.getDOMNode().style.display).toEqual('block');
+    });
+
+
+    it('should display the suggestions when the DropDown is displayed', function() {
+        var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
+        var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+        console.info('dropDown.getDOMNode()', dropDown.getDOMNode().innerHTML);
+        var children = dropDown.getDOMNode().children;
+        expect(children[0].innerHTML).toEqual('one');
+        expect(children[1].innerHTML).toEqual('two');
+        expect(children[2].innerHTML).toEqual('three');
+        expect(children.length).toEqual(3);
     });
 
 
