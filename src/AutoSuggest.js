@@ -3,10 +3,10 @@ import SearchBox from './SearchBox';
 import DropDown from './DropDown';
 
 
-
 let AutoSuggest = React.createClass({
 
     propTypes: {
+        suggestions: React.PropTypes.func.isRequired,
         onSuggestion: React.PropTypes.func.isRequired
     },
 
