@@ -10,7 +10,7 @@ let SearchBox = React.createClass({
 
 
     keyDown(event) {
-        console.info('SearchBox.keyDown');
+        console.info('SearchBox.keyDown', event.keyCode);
         let keys = [13,27,38,39,40];
         if (keys.indexOf(event.keyCode) !== -1) {
             this.props.handleSpecial(event.keyCode);
@@ -21,8 +21,9 @@ let SearchBox = React.createClass({
     handleChange(event) {
         console.info('SearchBox.handleChange', event.target.value);
         let keys = [13,27,38,39,40];
-        if (keys.indexOf(event.keyCode) === -1) {
-            let inputtedTerm = this.refs.searchBox.getDOMNode().value;
+        let keyCode = event.keyCode;
+        if (keys.indexOf(keyCode) === -1) {
+            let inputtedTerm = event.target.value;
             this.props.handleTerm(inputtedTerm);
         }
     },
