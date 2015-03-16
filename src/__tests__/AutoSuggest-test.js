@@ -9,7 +9,6 @@ describe('AutoSuggest', function() {
 
 
     var fetchSuggestions = function() {
-        console.info('fetchSuggestions');
         return ['one', 'two', 'three'];
     };
 
@@ -36,18 +35,21 @@ describe('AutoSuggest', function() {
 
     it('should display the DropDown when text is entered', function() {
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
+
         expect(dropDown.getDOMNode().style.display).toEqual('block');
     });
 
 
     it('should display the suggestions when the DropDown is displayed', function() {
         var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
         var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-        console.info('dropDown.getDOMNode()', dropDown.getDOMNode().innerHTML);
         var children = dropDown.getDOMNode().children;
+
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
+
         expect(children[0].innerHTML).toEqual('one');
         expect(children[1].innerHTML).toEqual('two');
         expect(children[2].innerHTML).toEqual('three');
@@ -55,15 +57,48 @@ describe('AutoSuggest', function() {
     });
 
 
-    /*it('renders text', function() {
-        console.info('renders');
-        var searchBox = TU.findRenderedDOMComponentWithClass(component, 'SearchBox');
-        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-        //TU.Simulate.keyDown(searchBox.getDOMNode(), {key: "Enter"});
-        //expect(searchBox.getDOMNode().getAttribute('value')).toEqual('X');
-        expect(searchBox.getDOMNode().textContent).toEqual('X');
-    });*/
+    it('should select the next suggestion when the down key is pressed', function() {
+        var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        var dropDown = TU.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+        var children = dropDown.getDOMNode().children;
 
+        TU.Simulate.change(searchBox, {target: {value: 'X'}});
+
+        expect(children[0].className).toEqual('suggestion');
+        expect(children[1].className).toEqual('suggestion');
+        expect(children[2].className).toEqual('suggestion');
+
+        TU.Simulate.keyDown(searchBox, {keyCode: 40});
+
+        expect(children[0].className).toEqual('suggestion selected');
+        expect(children[1].className).toEqual('suggestion');
+        expect(children[2].className).toEqual('suggestion');
+
+        TU.Simulate.keyDown(searchBox, {keyCode: 40});
+
+        expect(children[0].className).toEqual('suggestion');
+        expect(children[1].className).toEqual('suggestion selected');
+        expect(children[2].className).toEqual('suggestion');
+
+        TU.Simulate.keyDown(searchBox, {keyCode: 40});
+
+        expect(children[0].className).toEqual('suggestion');
+        expect(children[1].className).toEqual('suggestion');
+        expect(children[2].className).toEqual('suggestion selected');
+
+        TU.Simulate.keyDown(searchBox, {keyCode: 40});
+
+        expect(children[0].className).toEqual('suggestion');
+        expect(children[1].className).toEqual('suggestion');
+        expect(children[2].className).toEqual('suggestion');
+    });
+
+
+    it('should display entered text', function() {
+        var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'cat'}});
+        expect(searchBox.getDOMNode().value).toEqual('cat');
+    });
 
 
 });
