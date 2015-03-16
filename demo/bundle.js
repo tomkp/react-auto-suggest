@@ -10,12 +10,16 @@ var AutoSuggest = _interopRequire(require("../src/AutoSuggest"));
 var Example = React.createClass({
     displayName: "Example",
 
+    suggestions: function suggestions() {
+        return ["chicken", "duck", "elephant", "zebra", "penguin", "dog", "cat", "crocodile"];
+    },
+
     suggested: function suggested(suggestion) {
         console.info("suggestion:", suggestion);
     },
 
     render: function render() {
-        return React.createElement(AutoSuggest, { onSuggestion: this.suggested });
+        return React.createElement(AutoSuggest, { suggestions: this.suggestions, onSuggestion: this.suggested });
     }
 
 });
@@ -19733,8 +19737,6 @@ var SearchBox = _interopRequire(require("./SearchBox"));
 
 var DropDown = _interopRequire(require("./DropDown"));
 
-var suggestions = ["chicken", "duck", "elephant", "zebra", "penguin", "dog", "cat", "crocodile"];
-
 var AutoSuggest = React.createClass({
     displayName: "AutoSuggest",
 
@@ -19744,7 +19746,6 @@ var AutoSuggest = React.createClass({
 
     getInitialState: function getInitialState() {
         return {
-            suggestions: [],
             displayDropDown: false,
             index: -1
         };
@@ -19755,7 +19756,6 @@ var AutoSuggest = React.createClass({
         this.setState({
             index: -1,
             term: term,
-            suggestions: suggestions,
             displayDropDown: true
         });
     },
@@ -19765,7 +19765,6 @@ var AutoSuggest = React.createClass({
         this.setState({
             index: -1,
             term: term,
-            suggestions: suggestions,
             displayDropDown: false
         });
         this.triggerSuggestion(term);
@@ -19777,7 +19776,9 @@ var AutoSuggest = React.createClass({
 
     handleSpecial: function handleSpecial(code) {
         console.info("AutoSuggest.handleSpecial");
-        var length = this.state.suggestions.length;
+
+        var suggestions = this.props.suggestions();
+        var length = suggestions.length;
         var index = this.state.index;
         var displayDropDown = true;
         var term = undefined;
@@ -19806,7 +19807,7 @@ var AutoSuggest = React.createClass({
             }
         }
 
-        term = index === -1 ? this.state.term : this.state.suggestions[index];
+        term = index === -1 ? this.state.term : suggestions[index];
         this.setState({
             index: index,
             term: term,
@@ -19826,7 +19827,7 @@ var AutoSuggest = React.createClass({
             }),
             React.createElement(DropDown, { key: "dropdown",
                 handleClick: this.handleClick,
-                suggestions: this.state.suggestions,
+                suggestions: this.props.suggestions,
                 display: this.state.displayDropDown,
                 index: this.state.index
             })
@@ -19857,9 +19858,10 @@ var DropDown = React.createClass({
     render: function render() {
         var _this = this;
 
-        console.info("DropDown.render", this.props.suggestions);
+        console.info("DropDown.render");
         var index = this.props.index;
-        var entries = this.props.suggestions.map(function (suggestion, i) {
+        var suggestions = this.props.suggestions();
+        var entries = suggestions.map(function (suggestion, i) {
             var classes = ["suggestion"];
             if (i === index) {
                 classes.push("selected");

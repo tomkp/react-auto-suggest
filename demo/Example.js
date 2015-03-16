@@ -4,13 +4,17 @@ import AutoSuggest from '../src/AutoSuggest';
 
 var Example = React.createClass({
 
+    suggestions: function() {
+        return ['chicken', 'duck', 'elephant', 'zebra', 'penguin', 'dog', 'cat', 'crocodile'];
+    },
+
     suggested: function(suggestion) {
         console.info('suggestion:', suggestion);
     },
 
     render: function() {
         return (
-            <AutoSuggest onSuggestion={this.suggested}/>
+            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested}/>
         );
     }
 

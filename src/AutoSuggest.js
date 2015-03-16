@@ -3,11 +3,6 @@ import SearchBox from './SearchBox';
 import DropDown from './DropDown';
 
 
-let suggestions = [
-    'chicken', 'duck', 'elephant', 'zebra', 'penguin', 'dog', 'cat', 'crocodile'
-];
-
-
 
 let AutoSuggest = React.createClass({
 
@@ -17,7 +12,6 @@ let AutoSuggest = React.createClass({
 
     getInitialState() {
         return {
-            suggestions: [],
             displayDropDown: false,
             index: -1
         }
@@ -29,7 +23,6 @@ let AutoSuggest = React.createClass({
         this.setState({
             index: -1,
             term: term,
-            suggestions: suggestions,
             displayDropDown: true
         });
     },
@@ -40,7 +33,6 @@ let AutoSuggest = React.createClass({
         this.setState({
             index: -1,
             term: term,
-            suggestions: suggestions,
             displayDropDown: false
         });
         this.triggerSuggestion(term);
@@ -54,7 +46,9 @@ let AutoSuggest = React.createClass({
 
     handleSpecial(code) {
         console.info('AutoSuggest.handleSpecial');
-        let length = this.state.suggestions.length;
+
+        let suggestions = this.props.suggestions();
+        let length = suggestions.length;
         let index = this.state.index;
         let displayDropDown = true;
         let term;
@@ -85,7 +79,7 @@ let AutoSuggest = React.createClass({
             }
         }
 
-        term = index === -1?this.state.term:this.state.suggestions[index];
+        term = index === -1?this.state.term:suggestions[index];
         this.setState({
             index: index,
             term: term,
@@ -105,7 +99,7 @@ let AutoSuggest = React.createClass({
                 />
                 <DropDown key="dropdown"
                     handleClick={this.handleClick}
-                    suggestions={this.state.suggestions}
+                    suggestions={this.props.suggestions}
                     display={this.state.displayDropDown}
                     index={this.state.index}
                 />

@@ -7,8 +7,18 @@ var AutoSuggest = require('../AutoSuggest');
 
 describe('AutoSuggest', function() {
 
+
+    var fetchSuggestions = function() {
+        console.info('fetchSuggestions');
+        return ['one', 'two', 'three'];
+    };
+
+    var onSuggestion = function(suggestion) {
+        console.info('onSuggestion', suggestion);
+    };
+
     var autoSuggest = TU.renderIntoDocument(
-        <AutoSuggest />
+        <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
     );
 
 

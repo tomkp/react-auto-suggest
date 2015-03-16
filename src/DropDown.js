@@ -10,9 +10,10 @@ let DropDown = React.createClass({
     },
 
     render() {
-        console.info('DropDown.render', this.props.suggestions);
+        console.info('DropDown.render');
         let index = this.props.index;
-        let entries = this.props.suggestions
+        let suggestions = this.props.suggestions();
+        let entries = suggestions
             .map((suggestion, i) => {
                 let classes = ['suggestion'];
                 if (i === index) {
