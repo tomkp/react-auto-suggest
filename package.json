@@ -18,6 +18,7 @@
     "react": "^0.13.0-rc1"
   },
   "devDependencies": {
+    "babel": "^4.7.13",
     "babel-core": "^4.6.6",
     "babel-jest": "^4.0.0",
     "babelify": "^5.0.4",
@@ -27,7 +28,7 @@
   },
   "scripts": {
     "test": "jest ./src/__tests__",
-    "build": "browserify src/AutoSuggest.js -t -o dist/AutoSuggest.js",
+    "build": "babel src --out-dir dist",
     "demo": "browserify demo/Example.js -t -o demo/bundle.js"
   },
   "jest": {
