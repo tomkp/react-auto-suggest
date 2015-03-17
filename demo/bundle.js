@@ -19747,6 +19747,7 @@ var AutoSuggest = React.createClass({
 
     getInitialState: function getInitialState() {
         return {
+            suggestions: [],
             displayDropDown: false,
             index: -1
         };
@@ -19754,10 +19755,13 @@ var AutoSuggest = React.createClass({
 
     handleTerm: function handleTerm(term) {
         console.info("AutoSuggest.handleTerm", term);
+        var suggestions = this.props.suggestions(term) || [];
+        console.info("suggestions", suggestions);
         this.setState({
             index: -1,
             term: term,
-            displayDropDown: true
+            displayDropDown: true,
+            suggestions: suggestions
         });
     },
 
@@ -19778,7 +19782,8 @@ var AutoSuggest = React.createClass({
     handleSpecial: function handleSpecial(code) {
         console.info("AutoSuggest.handleSpecial");
 
-        var suggestions = this.props.suggestions();
+        //let suggestions = this.props.suggestions(this.state.term);
+        var suggestions = this.state.suggestions;
         var length = suggestions.length;
         var index = this.state.index;
         var displayDropDown = true;
@@ -19828,7 +19833,7 @@ var AutoSuggest = React.createClass({
             }),
             React.createElement(DropDown, { key: "dropdown",
                 handleClick: this.handleClick,
-                suggestions: this.props.suggestions,
+                suggestions: this.state.suggestions,
                 display: this.state.displayDropDown,
                 index: this.state.index
             })
@@ -19859,9 +19864,9 @@ var DropDown = React.createClass({
     render: function render() {
         var _this = this;
 
-        console.info("DropDown.render");
+        console.info("DropDown.render", this.props.suggestions);
         var index = this.props.index;
-        var suggestions = this.props.suggestions();
+        var suggestions = this.props.suggestions;
         var entries = suggestions.map(function (suggestion, i) {
             var classes = ["suggestion"];
             if (i === index) {
@@ -19906,7 +19911,7 @@ var SearchBox = React.createClass({
     },
 
     keyDown: function keyDown(event) {
-        console.info("SearchBox.keyDown");
+        console.info("SearchBox.keyDown", event.keyCode);
         var keys = [13, 27, 38, 39, 40];
         if (keys.indexOf(event.keyCode) !== -1) {
             this.props.handleSpecial(event.keyCode);
@@ -19914,11 +19919,10 @@ var SearchBox = React.createClass({
     },
 
     handleChange: function handleChange(event) {
-        var keyCode = event.keyCode;
-        console.info("SearchBox.handleChange", event.target.value, keyCode);
+        console.info("SearchBox.handleChange", event.target.value);
         var keys = [13, 27, 38, 39, 40];
+        var keyCode = event.keyCode;
         if (keys.indexOf(keyCode) === -1) {
-            //let inputtedTerm = this.refs.searchBox.getDOMNode().value;
             var inputtedTerm = event.target.value;
             this.props.handleTerm(inputtedTerm);
         }
