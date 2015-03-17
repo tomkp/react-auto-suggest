@@ -101,4 +101,18 @@ describe('AutoSuggest', function() {
     });
 
 
+    it('should pass entered text to suggestions function', function() {
+        var callback = jest.genMockFunction();
+
+        var autoSuggest = TU.renderIntoDocument(
+            <AutoSuggest suggestions={callback} onSuggestion={onSuggestion}/>
+        );
+        var searchBox = TU.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        TU.Simulate.change(searchBox.getDOMNode(), {target: {value: 'cat'}});
+        expect(searchBox.getDOMNode().value).toEqual('cat');
+
+        expect(callback.mock.calls[0][0]).toEqual('cat');
+
+    });
+
 });

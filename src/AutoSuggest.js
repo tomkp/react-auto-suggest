@@ -12,6 +12,7 @@ let AutoSuggest = React.createClass({
 
     getInitialState() {
         return {
+            suggestions: [],
             displayDropDown: false,
             index: -1
         }
@@ -20,10 +21,13 @@ let AutoSuggest = React.createClass({
 
     handleTerm(term) {
         console.info('AutoSuggest.handleTerm', term);
+        let suggestions = this.props.suggestions(term) || [];
+        console.info('suggestions', suggestions);
         this.setState({
             index: -1,
             term: term,
-            displayDropDown: true
+            displayDropDown: true,
+            suggestions: suggestions
         });
     },
 
@@ -47,7 +51,8 @@ let AutoSuggest = React.createClass({
     handleSpecial(code) {
         console.info('AutoSuggest.handleSpecial');
 
-        let suggestions = this.props.suggestions();
+        //let suggestions = this.props.suggestions(this.state.term);
+        let suggestions = this.state.suggestions;
         let length = suggestions.length;
         let index = this.state.index;
         let displayDropDown = true;
@@ -99,7 +104,7 @@ let AutoSuggest = React.createClass({
                 />
                 <DropDown key="dropdown"
                     handleClick={this.handleClick}
-                    suggestions={this.props.suggestions}
+                    suggestions={this.state.suggestions}
                     display={this.state.displayDropDown}
                     index={this.state.index}
                 />
