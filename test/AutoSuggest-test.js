@@ -114,4 +114,15 @@ describe('AutoSuggest', function() {
         expect(searchBox.getDOMNode().value).to.equal('cat');
     });
 
+
+    it('should hide the dropdown when the esc key is pressed', function() {
+        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+
+        TestUtils.Simulate.change(searchBox, {target: {value: 'X'}});
+        expect(dropDown.getDOMNode().style.display).to.equal('block');
+        TestUtils.Simulate.keyDown(searchBox, {keyCode: 27});
+        expect(dropDown.getDOMNode().style.display).to.equal('none');
+    });
+
 });
