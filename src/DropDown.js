@@ -4,13 +4,13 @@ import React from 'react';
 let DropDown = React.createClass({
 
     handleClick(event) {
-        console.info('DropDown.handleClick');
+        //console.info('DropDown.handleClick');
         let suggestion = event.target.getAttribute('data-suggestion');
         this.props.handleClick(suggestion);
     },
 
     render() {
-        console.info('DropDown.render', this.props.suggestions);
+        //console.info('DropDown.render', this.props.suggestions);
         let index = this.props.index;
         let suggestions = this.props.suggestions;
         let entries = suggestions

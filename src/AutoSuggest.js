@@ -20,9 +20,9 @@ let AutoSuggest = React.createClass({
 
 
     handleTerm(term) {
-        console.info('AutoSuggest.handleTerm', term);
+        //console.info('AutoSuggest.handleTerm', term);
         let suggestions = this.props.suggestions(term) || [];
-        console.info('suggestions', suggestions);
+        //console.info('suggestions', suggestions);
         this.setState({
             index: -1,
             term: term,
@@ -33,7 +33,7 @@ let AutoSuggest = React.createClass({
 
 
     handleClick(term) {
-        console.info('AutoSuggest.handleClick', term);
+        //console.info('AutoSuggest.handleClick', term);
         this.setState({
             index: -1,
             term: term,
@@ -49,7 +49,7 @@ let AutoSuggest = React.createClass({
 
 
     handleSpecial(code) {
-        console.info('AutoSuggest.handleSpecial');
+        //console.info('AutoSuggest.handleSpecial');
 
         //let suggestions = this.props.suggestions(this.state.term);
         let suggestions = this.state.suggestions;
@@ -94,7 +94,7 @@ let AutoSuggest = React.createClass({
 
 
     render() {
-        console.info('AutoSuggest.render');
+        //console.info('AutoSuggest.render');
         return (
             <div className="AutoSuggest">
                 <SearchBox
