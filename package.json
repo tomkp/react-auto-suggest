@@ -30,10 +30,10 @@
   },
   "scripts": {
     "build": "browserify src/Calendar.js -t -o dist/Calendar.js",
-    "demo": "browserify demo/Example.js -t -o demo/bundle.js",
     "test": "mochify -R spec",
     "test-watch": "mochify --watch",
-    "cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info"
+    "cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info",
+    "demo": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh"
   },
   "browserify": {
     "transform": [
