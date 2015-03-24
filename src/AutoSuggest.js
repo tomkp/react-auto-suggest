@@ -21,6 +21,8 @@ let AutoSuggest = React.createClass({
 
     handleTerm(term) {
         console.info('AutoSuggest.handleTerm', term);
+        let child = this.props.children;
+
         this.setState({
             term: term
         });
@@ -91,7 +93,13 @@ let AutoSuggest = React.createClass({
             }
         }
 
+        //console.info('children', this.props.children);
+
+
         term = index === -1?this.state.term:suggestions[index];
+
+        console.info('term', term, index, suggestions);
+
         this.setState({
             index: index,
             term: term,
@@ -102,6 +110,19 @@ let AutoSuggest = React.createClass({
 
     render() {
         //console.info('AutoSuggest.render');
+
+        /*var children = this.props.children;
+        let elements = [];
+        if (children && children.length > 0) {
+            elements = children.map((child) => {
+                console.info('child', child);
+                return child;
+            });
+        }*/
+
+        let child = this.props.children;
+        //console.info('child', child);
+
         return (
             <div className="AutoSuggest">
                 <SearchBox
@@ -113,6 +134,7 @@ let AutoSuggest = React.createClass({
                     handleClick={this.handleClick}
                     suggestions={this.state.suggestions}
                     display={this.state.displayDropDown}
+                    renderer={child}
                     index={this.state.index}
                 />
             </div>

@@ -3,6 +3,27 @@ import AutoSuggest from '../src/AutoSuggest';
 import jsonp from 'jsonp';
 
 
+
+var Suggestion = React.createClass({
+
+
+    render() {
+        //console.info('Suggestion.render', this.props.suggestion);
+        var suggestion = this.props.suggestion;
+        let classes = ['Suggestion'];
+        if (this.props.selected) {
+            classes.push('selected');
+        }
+        return (
+            <div className={classes.join(' ')} data-suggestion={suggestion.title}>
+                <span className="title">{suggestion.title}</span>
+                <span className="series-title">{suggestion.seriesName?suggestion.seriesName:''}</span>
+            </div>
+        );
+    }
+});
+
+
 var Example = React.createClass({
 
     suggestions: function(value, callback) {
@@ -11,7 +32,8 @@ var Example = React.createClass({
             if (!err) {
                 if (data.searchResults) {
                     var results = data.searchResults.map(function (result) {
-                        return result.seriesName + ' / '  + result.title;
+                        //return result.seriesName + ' / '  + result.title;
+                        return result;
                     });
                     callback(results);
                 }
@@ -26,7 +48,9 @@ var Example = React.createClass({
 
     render: function() {
         return (
-            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested} />
+            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested}>
+                <Suggestion />
+            </AutoSuggest>
         );
     }
 
