@@ -40,20 +40,16 @@ describe('AutoSuggest', function() {
     class Asserter {
 
         constructor(autoSuggest) {
-            //this.autoSuggest = autoSuggest;
             this.searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
             this.dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-
         }
 
         assertValue(value) {
-            console.info('assertValue', value);
             expect(this.searchBox.getDOMNode().textContent).to.equal(value);
             return this;
         }
 
         enterNewValue(value) {
-            console.info('enterNewValue', value);
             TestUtils.Simulate.change(this.searchBox.getDOMNode(), {target: {value: value}});
             return this;
         }
@@ -77,12 +73,14 @@ describe('AutoSuggest', function() {
 
 
 
-    it('should display the DropDown', function() {
+    it('should not display the DropDown', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-        expect(dropDown.getDOMNode().style.display).to.equal('none');
+
+        new Asserter(autoSuggest)
+            .assertDropDownNotDisplayed()
+        ;
     });
 
 
@@ -90,12 +88,11 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-
-        expect(dropDown.getDOMNode().style.display).to.equal('block');
+        new Asserter(autoSuggest)
+            .assertDropDownNotDisplayed()
+            .enterNewValue('Tom')
+            .assertDropDownDisplayed()
+        ;
     });
 
 
