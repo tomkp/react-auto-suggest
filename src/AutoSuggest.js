@@ -20,12 +20,18 @@ let AutoSuggest = React.createClass({
 
 
     handleTerm(term) {
-        //console.info('AutoSuggest.handleTerm', term);
-        let suggestions = this.props.suggestions(term) || [];
-        //console.info('suggestions', suggestions);
+        console.info('AutoSuggest.handleTerm', term);
+        this.setState({
+            term: term
+        });
+        this.props.suggestions(term, this.onResponse);
+    },
+
+
+    onResponse(suggestions) {
+        console.info('AutoSuggest.onResponse', suggestions);
         this.setState({
             index: -1,
-            term: term,
             displayDropDown: true,
             suggestions: suggestions
         });
@@ -33,7 +39,7 @@ let AutoSuggest = React.createClass({
 
 
     handleClick(term) {
-        //console.info('AutoSuggest.handleClick', term);
+        console.info('AutoSuggest.handleClick', term);
         this.setState({
             index: -1,
             term: term,
@@ -49,10 +55,11 @@ let AutoSuggest = React.createClass({
 
 
     handleSpecial(code) {
-        //console.info('AutoSuggest.handleSpecial');
+        console.info('AutoSuggest.handleSpecial');
 
         //let suggestions = this.props.suggestions(this.state.term);
         let suggestions = this.state.suggestions;
+
         let length = suggestions.length;
         let index = this.state.index;
         let displayDropDown = true;

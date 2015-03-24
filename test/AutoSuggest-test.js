@@ -7,8 +7,8 @@ import AutoSuggest from '../src/AutoSuggest';
 describe('AutoSuggest', function() {
 
 
-    var fetchSuggestions = function() {
-        return ['one', 'two', 'three'];
+    var fetchSuggestions = function(value, callback) {
+        callback(['one', 'two', 'three']);
     };
 
     var onSuggestion = function(suggestion) {
