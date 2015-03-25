@@ -67,7 +67,7 @@ let DropDown = React.createClass({
                                 {suggestion}
                             </div>
                         );*/
-                        return <Suggestion suggestion={suggestion} selected={selected} />
+                        return <Suggestion key={i} suggestion={suggestion} selected={selected} />
                     }
 
                 });
