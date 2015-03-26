@@ -150,7 +150,7 @@ describe('AutoSuggest', function() {
 
 
     it('should allow custom dropdowns', function() {
-        var Suggestion = React.createClass({
+        var Custom = React.createClass({
             render() {
                 return <div className="Suggestion">{this.props.suggestion}</div>;
             }
@@ -158,7 +158,7 @@ describe('AutoSuggest', function() {
 
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
-                <Suggestion />
+                <Custom />
             </AutoSuggest>
         );
 
@@ -174,7 +174,7 @@ describe('AutoSuggest', function() {
             callback([{title:'one'}, {title:'two'}, {title:'three'}]);
         };
 
-        var Suggestion = React.createClass({
+        var Custom = React.createClass({
             render() {
                 return <div className={this.props.className} data-suggestion={this.props.suggestion.title}>{this.props.suggestion.title}</div>;
             }
@@ -182,7 +182,7 @@ describe('AutoSuggest', function() {
 
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
-                <Suggestion />
+                <Custom />
             </AutoSuggest>
         );
 
@@ -198,7 +198,7 @@ describe('AutoSuggest', function() {
             callback([{title:'one'}, {title:'two'}, {title:'three'}]);
         };
 
-        var Suggestion = React.createClass({
+        var Custom = React.createClass({
             render() {
                 var suggestion = this.props.suggestion;
                 return <div className="Suggestion" data-suggestion={suggestion.title}>{suggestion.title}</div>;
@@ -207,7 +207,7 @@ describe('AutoSuggest', function() {
 
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
-                <Suggestion />
+                <Custom />
             </AutoSuggest>
         );
 
