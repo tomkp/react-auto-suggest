@@ -121,13 +121,13 @@ describe('AutoSuggest', function() {
 
 
     it('should pass entered text to suggestions function', function(done) {
-        var callback = function(suggestion) {
+        var fetchSuggestions = function(suggestion) {
             expect(suggestion).to.equal('cat');
             done();
         };
 
         var autoSuggest = TestUtils.renderIntoDocument(
-            <AutoSuggest suggestions={callback} onSuggestion={onSuggestion}/>
+            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
         new Asserter(autoSuggest)
