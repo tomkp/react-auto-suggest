@@ -87,6 +87,28 @@ describe('AutoSuggest', function() {
     });
 
 
+    it('should select the previous suggestion when the up key is pressed', function() {
+        var autoSuggest = TestUtils.renderIntoDocument(
+            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
+        );
+
+        new Asserter(autoSuggest)
+            .enterNewValue('C')
+            .assertSelectedSuggestion()
+            .arrowUp()
+            .assertSelectedSuggestion('three')
+            .arrowUp()
+            .assertSelectedSuggestion('two')
+            .arrowUp()
+            .assertSelectedSuggestion('one')
+            .arrowUp()
+            .assertSelectedSuggestion()
+            .arrowUp()
+            .assertSelectedSuggestion('three')
+        ;
+    });
+
+
     it('should display entered text', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
