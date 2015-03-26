@@ -4,6 +4,66 @@ let { TestUtils } = React.addons;
 import AutoSuggest from '../src/AutoSuggest';
 
 
+class Asserter {
+
+    constructor(autoSuggest) {
+        this.searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
+        this.dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+    }
+
+    assertValue(value) {
+        expect(this.searchBox.getDOMNode().value).to.equal(value);
+        return this;
+    }
+
+    enterNewValue(value) {
+        TestUtils.Simulate.change(this.searchBox.getDOMNode(), {target: {value: value}});
+        return this;
+    }
+
+
+    arrowLeft() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 37});
+    }
+
+    arrowUp() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 38});
+    }
+
+    arrowRight() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 39});
+    }
+
+    arrowDown() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 40});
+    }
+
+    esc() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 27});
+    }
+
+    enter() {
+        TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 13});
+    }
+
+    assertDropDownDisplayed() {
+        expect(this.dropDown.getDOMNode().style.display).to.equal('block');
+        return this;
+    }
+
+    assertDropDownNotDisplayed() {
+        expect(this.dropDown.getDOMNode().style.display).to.equal('none');
+        return this;
+    }
+
+    assertNumberOfSuggestions(expectedNumberOfSuggestions) {
+        var children = this.dropDown.getDOMNode().children;
+        expect(children.length).to.equal(expectedNumberOfSuggestions);
+        return this;
+    }
+}
+
+
 describe('AutoSuggest', function() {
 
 
@@ -17,60 +77,13 @@ describe('AutoSuggest', function() {
 
 
 
-
     it('should render', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        expect(searchBox.getDOMNode().textContent).to.equal('');
 
-        new Asserter(autoSuggest)
-            .assertValue('')
-            .assertDropDownNotDisplayed()
-            .enterNewValue('Tom')
-            .assertDropDownDisplayed()
-            .assertNumberOfSuggestions(3)
-            .assertValue('')
-
+        new Asserter(autoSuggest);
     });
-
-
-
-    class Asserter {
-
-        constructor(autoSuggest) {
-            this.searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-            this.dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-        }
-
-        assertValue(value) {
-            expect(this.searchBox.getDOMNode().textContent).to.equal(value);
-            return this;
-        }
-
-        enterNewValue(value) {
-            TestUtils.Simulate.change(this.searchBox.getDOMNode(), {target: {value: value}});
-            return this;
-        }
-
-        assertDropDownDisplayed() {
-            expect(this.dropDown.getDOMNode().style.display).to.equal('block');
-            return this;
-        }
-
-        assertDropDownNotDisplayed() {
-            expect(this.dropDown.getDOMNode().style.display).to.equal('none');
-            return this;
-        }
-
-        assertNumberOfSuggestions(expectedNumberOfSuggestions) {
-            var children = this.dropDown.getDOMNode().children;
-            expect(children.length).to.equal(expectedNumberOfSuggestions);
-            return this;
-        }
-    }
-
 
 
     it('should not display the DropDown', function() {
@@ -90,7 +103,7 @@ describe('AutoSuggest', function() {
         );
         new Asserter(autoSuggest)
             .assertDropDownNotDisplayed()
-            .enterNewValue('Tom')
+            .enterNewValue('C')
             .assertDropDownDisplayed()
         ;
     });
@@ -250,7 +263,6 @@ describe('AutoSuggest', function() {
         expect(suggestions[1].getDOMNode().innerHTML).to.equal('two');
         expect(suggestions[2].getDOMNode().innerHTML).to.equal('three');
     });
-
 
 /*
     TODO
