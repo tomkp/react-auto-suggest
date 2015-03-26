@@ -121,7 +121,6 @@ describe('AutoSuggest', function() {
 
 
     it('should pass entered text to suggestions function', function(done) {
-
         var callback = function(suggestion) {
             expect(suggestion).to.equal('cat');
             done();
@@ -151,7 +150,6 @@ describe('AutoSuggest', function() {
 
 
     it('should allow custom dropdowns', function() {
-
         var Suggestion = React.createClass({
             render() {
                 return <div className="Suggestion">{this.props.suggestion}</div>;
@@ -172,7 +170,6 @@ describe('AutoSuggest', function() {
 
 
     it('should allow custom dropdowns for arrays of json', function() {
-
         var fetchSuggestions = function(value, callback) {
             callback([{title:'one'}, {title:'two'}, {title:'three'}]);
         };
