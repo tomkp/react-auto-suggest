@@ -193,17 +193,12 @@ describe('AutoSuggest', function() {
     });
 
 
-/*
-    TODO
-
     it('should handle displaying term from custom dropdowns', function() {
-
         var fetchSuggestions = function(value, callback) {
             callback([{title:'one'}, {title:'two'}, {title:'three'}]);
         };
 
         var Suggestion = React.createClass({
-
             render() {
                 var suggestion = this.props.suggestion;
                 return <div className="Suggestion" data-suggestion={suggestion.title}>{suggestion.title}</div>;
@@ -216,20 +211,15 @@ describe('AutoSuggest', function() {
             </AutoSuggest>
         );
 
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 40});
-
-        var suggestions = TestUtils.scryRenderedDOMComponentsWithClass(autoSuggest, 'Suggestion');
-
-        expect(suggestions[0].getDOMNode().innerHTML).to.equal('one');
-
-        expect(searchBox.getDOMNode().value).to.equal('one');
-
+        new Asserter(autoSuggest)
+            .enterNewValue('c')
+            .assertValue('c')
+            .assertSuggestions(['one', 'two', 'three'])
+            .arrowDown()
+            // TODO
+            //.assertValue('one')
+        ;
     });
-*/
 
 
 
