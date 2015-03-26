@@ -7,7 +7,7 @@ import React from 'react/addons';
 let Suggestion = React.createClass({
 
     render() {
-        console.info('Suggestion.render', this.props.suggestion);
+        //console.info('Suggestion.render', this.props.suggestion);
         var suggestion = this.props.suggestion;
         let classes = ['Suggestion'];
         if (this.props.selected) {
