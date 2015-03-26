@@ -4,7 +4,7 @@ import jsonp from 'jsonp';
 
 
 
-var Suggestion = React.createClass({
+var Custom = React.createClass({
 
 
     render() {
@@ -32,8 +32,13 @@ var Example = React.createClass({
             if (!err) {
                 if (data.searchResults) {
                     var results = data.searchResults.map(function (result) {
-                        //return result.seriesName + ' / '  + result.title;
-                        return result;
+                        var seriesName = result.seriesName;
+                        var title = result.title;
+                        return (seriesName?seriesName:'') +
+                            ((seriesName && title)?' / ':'') +
+                            (title?title:'')
+                                ;
+                        //return result;
                     });
                     callback(results);
                 }
@@ -48,9 +53,7 @@ var Example = React.createClass({
 
     render: function() {
         return (
-            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested}>
-                <Suggestion />
-            </AutoSuggest>
+            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested} />
         );
     }
 

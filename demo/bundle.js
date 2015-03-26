@@ -9,8 +9,8 @@ var AutoSuggest = _interopRequire(require("../src/AutoSuggest"));
 
 var jsonp = _interopRequire(require("jsonp"));
 
-var Suggestion = React.createClass({
-    displayName: "Suggestion",
+var Custom = React.createClass({
+    displayName: "Custom",
 
     render: function render() {
         //console.info('Suggestion.render', this.props.suggestion);
@@ -45,8 +45,10 @@ var Example = React.createClass({
             if (!err) {
                 if (data.searchResults) {
                     var results = data.searchResults.map(function (result) {
-                        //return result.seriesName + ' / '  + result.title;
-                        return result;
+                        var seriesName = result.seriesName;
+                        var title = result.title;
+                        return (seriesName ? seriesName : "") + (seriesName && title ? " / " : "") + (title ? title : "");
+                        //return result;
                     });
                     callback(results);
                 }
@@ -59,11 +61,7 @@ var Example = React.createClass({
     },
 
     render: function render() {
-        return React.createElement(
-            AutoSuggest,
-            { suggestions: this.suggestions, onSuggestion: this.suggested },
-            React.createElement(Suggestion, null)
-        );
+        return React.createElement(AutoSuggest, { suggestions: this.suggestions, onSuggestion: this.suggested });
     }
 
 });
@@ -22463,7 +22461,7 @@ var AutoSuggest = React.createClass({
     },
 
     handleTerm: function handleTerm(term) {
-        console.info("AutoSuggest.handleTerm", term);
+        //console.info('AutoSuggest.handleTerm', term);
         var child = this.props.children;
 
         this.setState({
@@ -22473,7 +22471,7 @@ var AutoSuggest = React.createClass({
     },
 
     onResponse: function onResponse(suggestions) {
-        console.info("AutoSuggest.onResponse", suggestions);
+        //console.info('AutoSuggest.onResponse', suggestions);
         this.setState({
             index: -1,
             displayDropDown: true,
@@ -22482,7 +22480,7 @@ var AutoSuggest = React.createClass({
     },
 
     handleClick: function handleClick(term) {
-        console.info("AutoSuggest.handleClick", term);
+        //console.info('AutoSuggest.handleClick', term);
         this.setState({
             index: -1,
             term: term,
@@ -22496,7 +22494,7 @@ var AutoSuggest = React.createClass({
     },
 
     handleSpecial: function handleSpecial(code) {
-        console.info("AutoSuggest.handleSpecial");
+        //console.info('AutoSuggest.handleSpecial');
 
         //let suggestions = this.props.suggestions(this.state.term);
         var suggestions = this.state.suggestions;
@@ -22530,11 +22528,11 @@ var AutoSuggest = React.createClass({
             }
         }
 
-        console.info("children", this.props.children);
+        //console.info('children', this.props.children);
 
         term = index === -1 ? this.state.term : suggestions[index];
 
-        console.info("term", term, index, suggestions);
+        //console.info('term', term, index, suggestions);
 
         this.setState({
             index: index,
@@ -22550,7 +22548,7 @@ var AutoSuggest = React.createClass({
         let elements = [];
         if (children && children.length > 0) {
             elements = children.map((child) => {
-                console.info('child', child);
+                //console.info('child', child);
                 return child;
             });
         }*/
@@ -22587,6 +22585,24 @@ module.exports = AutoSuggest;
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 var React = _interopRequire(require("react/addons"));
+
+var Suggestion = React.createClass({
+    displayName: "Suggestion",
+
+    render: function render() {
+        //console.info('Suggestion.render', this.props.suggestion);
+        var suggestion = this.props.suggestion;
+        var classes = ["Suggestion"];
+        if (this.props.selected) {
+            classes.push("selected");
+        }
+        return React.createElement(
+            "div",
+            { className: classes.join(" "), "data-suggestion": suggestion },
+            suggestion
+        );
+    }
+});
 
 var DropDown = React.createClass({
     displayName: "DropDown",
@@ -22627,14 +22643,15 @@ var DropDown = React.createClass({
                         onClick: _this.handleClick
                     });
                 } else {
-                    return React.createElement(
-                        "div",
-                        { onClick: _this.handleClick,
-                            "data-suggestion": suggestion,
-                            selected: selected,
-                            key: suggestion + i },
-                        suggestion
-                    );
+                    /*return (
+                        <div onClick={this.handleClick}
+                             data-suggestion={suggestion}
+                             selected={selected}
+                             key={suggestion + i}>
+                            {suggestion}
+                        </div>
+                    );*/
+                    return React.createElement(Suggestion, { key: i, suggestion: suggestion, selected: selected });
                 }
             });
         }
@@ -22685,12 +22702,13 @@ var SearchBox = React.createClass({
     },
 
     render: function render() {
-        //console.info('SearchBox.render');
+        //console.info('SearchBox.render', this.props.displayTerm);
+        var value = this.props.displayTerm || "";
         return React.createElement("input", { ref: "searchBox",
             className: "SearchBox",
             onKeyDown: this.keyDown,
             onChange: this.handleChange,
-            value: this.props.displayTerm });
+            value: value });
     }
 });
 
