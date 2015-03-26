@@ -5,7 +5,6 @@ let { TestUtils } = React.addons;
 import AutoSuggest from '../src/AutoSuggest';
 
 
-
 describe('AutoSuggest', function() {
 
 
@@ -13,10 +12,10 @@ describe('AutoSuggest', function() {
         callback(['one', 'two', 'three']);
     };
 
+
     var onSuggestion = function(suggestion) {
         console.info('onSuggestion', suggestion);
     };
-
 
 
     it('should render', function() {
@@ -55,16 +54,11 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-        var children = dropDown.getDOMNode().children;
 
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-
-        expect(children[0].innerHTML).to.equal('one');
-        expect(children[1].innerHTML).to.equal('two');
-        expect(children[2].innerHTML).to.equal('three');
-        expect(children.length).to.equal(3);
+        new Asserter(autoSuggest)
+            .enterNewValue('C')
+            .assertSuggestions(['one', 'two', 'three'])
+        ;
     });
 
 
@@ -72,39 +66,21 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
-        var children = dropDown.getDOMNode().children;
 
-        TestUtils.Simulate.change(searchBox, {target: {value: 'X'}});
-
-        expect(children[0].className).to.equal('Suggestion');
-        expect(children[1].className).to.equal('Suggestion');
-        expect(children[2].className).to.equal('Suggestion');
-
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 40});
-
-        expect(children[0].className).to.equal('Suggestion selected');
-        expect(children[1].className).to.equal('Suggestion');
-        expect(children[2].className).to.equal('Suggestion');
-
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 40});
-
-        expect(children[0].className).to.equal('Suggestion');
-        expect(children[1].className).to.equal('Suggestion selected');
-        expect(children[2].className).to.equal('Suggestion');
-
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 40});
-
-        expect(children[0].className).to.equal('Suggestion');
-        expect(children[1].className).to.equal('Suggestion');
-        expect(children[2].className).to.equal('Suggestion selected');
-
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 40});
-
-        expect(children[0].className).to.equal('Suggestion');
-        expect(children[1].className).to.equal('Suggestion');
-        expect(children[2].className).to.equal('Suggestion');
+        new Asserter(autoSuggest)
+            .enterNewValue('C')
+            .assertSelectedSuggestion()
+            .arrowDown()
+            .assertSelectedSuggestion('one')
+            .arrowDown()
+            .assertSelectedSuggestion('two')
+            .arrowDown()
+            .assertSelectedSuggestion('three')
+            .arrowDown()
+            .assertSelectedSuggestion()
+            .arrowDown()
+            .assertSelectedSuggestion('one')
+        ;
     });
 
 
@@ -112,9 +88,10 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'cat'}});
-        expect(searchBox.getDOMNode().value).to.equal('cat');
+
+        new Asserter(autoSuggest)
+            .enterNewValue('cat')
+            .assertValue('cat');
     });
 
 
@@ -128,9 +105,10 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={callback} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'cat'}});
-        expect(searchBox.getDOMNode().value).to.equal('cat');
+
+        new Asserter(autoSuggest)
+            .enterNewValue('cat')
+            .assertValue('cat');
     });
 
 
@@ -138,16 +116,13 @@ describe('AutoSuggest', function() {
         var autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        var dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
 
-        TestUtils.Simulate.change(searchBox, {target: {value: 'X'}});
-        expect(dropDown.getDOMNode().style.display).to.equal('block');
-        TestUtils.Simulate.keyDown(searchBox, {keyCode: 27});
-        expect(dropDown.getDOMNode().style.display).to.equal('none');
+        new Asserter(autoSuggest)
+            .enterNewValue('cat')
+            .assertDropDownDisplayed()
+            .esc()
+            .assertDropDownNotDisplayed()
     });
-
-
 
 
     it('should allow custom dropdowns', function() {
@@ -164,17 +139,11 @@ describe('AutoSuggest', function() {
             </AutoSuggest>
         );
 
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-
-        var suggestions = TestUtils.scryRenderedDOMComponentsWithClass(autoSuggest, 'Suggestion');
-
-        expect(suggestions[0].getDOMNode().innerHTML).to.equal('one');
-        expect(suggestions[1].getDOMNode().innerHTML).to.equal('two');
-        expect(suggestions[2].getDOMNode().innerHTML).to.equal('three');
+        new Asserter(autoSuggest)
+            .enterNewValue('C')
+            .assertSuggestions(['one', 'two', 'three'])
+        ;
     });
-
 
 
     it('should allow custom dropdowns for arrays of json', function() {
@@ -195,16 +164,12 @@ describe('AutoSuggest', function() {
             </AutoSuggest>
         );
 
-        var searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-
-        TestUtils.Simulate.change(searchBox.getDOMNode(), {target: {value: 'X'}});
-
-        var suggestions = TestUtils.scryRenderedDOMComponentsWithClass(autoSuggest, 'Suggestion');
-
-        expect(suggestions[0].getDOMNode().innerHTML).to.equal('one');
-        expect(suggestions[1].getDOMNode().innerHTML).to.equal('two');
-        expect(suggestions[2].getDOMNode().innerHTML).to.equal('three');
+        new Asserter(autoSuggest)
+            .enterNewValue('C')
+            .assertSuggestions(['one', 'two', 'three'])
+        ;
     });
+
 
 /*
     TODO
@@ -253,6 +218,7 @@ describe('AutoSuggest', function() {
 class Asserter {
 
     constructor(autoSuggest) {
+        this.autoSuggest = autoSuggest;
         this.searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
         this.dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
     }
@@ -269,26 +235,32 @@ class Asserter {
 
     arrowLeft() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 37});
+        return this;
     }
 
     arrowUp() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 38});
+        return this;
     }
 
     arrowRight() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 39});
+        return this;
     }
 
     arrowDown() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 40});
+        return this;
     }
 
     esc() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 27});
+        return this;
     }
 
     enter() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 13});
+        return this;
     }
 
     assertDropDownDisplayed() {
@@ -304,6 +276,26 @@ class Asserter {
     assertNumberOfSuggestions(expectedNumberOfSuggestions) {
         var children = this.dropDown.getDOMNode().children;
         expect(children.length).to.equal(expectedNumberOfSuggestions);
+        return this;
+    }
+
+    assertSuggestions(expectedSuggestions) {
+        let suggestions = TestUtils.scryRenderedDOMComponentsWithClass(this.dropDown, 'Suggestion');
+        var values = suggestions.map((suggestion) => {
+            return suggestion.getDOMNode().innerHTML;
+        });
+        expect(values).to.eql(expectedSuggestions);
+        return this;
+    }
+
+    assertSelectedSuggestion(expected) {
+        let selected = TestUtils.scryRenderedDOMComponentsWithClass(this.dropDown, 'selected');
+        if (expected) {
+            expect(selected.length).to.equal(1);
+            expect(selected[0].getDOMNode().innerHTML).to.equal(expected);
+        } else {
+            expect(selected.length).to.equal(0);
+        }
         return this;
     }
 }
