@@ -6,18 +6,20 @@ import jsonp from 'jsonp';
 
 var Custom = React.createClass({
 
-
     render() {
-        //console.info('Suggestion.render', this.props.suggestion);
         var suggestion = this.props.suggestion;
         let classes = ['Suggestion'];
         if (this.props.selected) {
             classes.push('selected');
         }
+        let url = 'http://images.metadata.sky.com/pd-image/' + suggestion.uuid + '/l/100';
         return (
             <div className={classes.join(' ')} data-suggestion={suggestion.title}>
-                <span className="title">{suggestion.title}</span>
-                <span className="series-title">{suggestion.seriesName?suggestion.seriesName:''}</span>
+                <img className="thumbnail" src={url} />
+                <span className="titles">
+                    <div className="series-title">{suggestion.seriesName?suggestion.seriesName:''}</div>
+                    <div className="title">{suggestion.title}</div>
+                </span>
             </div>
         );
     }
@@ -32,13 +34,7 @@ var Example = React.createClass({
             if (!err) {
                 if (data.searchResults) {
                     var results = data.searchResults.map(function (result) {
-                        var seriesName = result.seriesName;
-                        var title = result.title;
-                        return (seriesName?seriesName:'') +
-                            ((seriesName && title)?' / ':'') +
-                            (title?title:'')
-                                ;
-                        //return result;
+                        return result;
                     });
                     callback(results);
                 }
@@ -51,9 +47,16 @@ var Example = React.createClass({
         console.info('suggestion:', suggestion);
     },
 
+    onSelect: function(suggestion) {
+        return suggestion.title;
+    },
+
+
     render: function() {
         return (
-            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested} />
+            <AutoSuggest suggestions={this.suggestions} onSuggestion={this.suggested} onSelect={this.onSelect}>
+                <Custom />
+            </AutoSuggest>
         );
     }
 
