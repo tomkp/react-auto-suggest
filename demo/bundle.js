@@ -13,24 +13,29 @@ var Custom = React.createClass({
     displayName: "Custom",
 
     render: function render() {
-        //console.info('Suggestion.render', this.props.suggestion);
         var suggestion = this.props.suggestion;
         var classes = ["Suggestion"];
         if (this.props.selected) {
             classes.push("selected");
         }
+        var url = "http://images.metadata.sky.com/pd-image/" + suggestion.uuid + "/l/100";
         return React.createElement(
             "div",
             { className: classes.join(" "), "data-suggestion": suggestion.title },
+            React.createElement("img", { className: "thumbnail", src: url }),
             React.createElement(
                 "span",
-                { className: "title" },
-                suggestion.title
-            ),
-            React.createElement(
-                "span",
-                { className: "series-title" },
-                suggestion.seriesName ? suggestion.seriesName : ""
+                { className: "titles" },
+                React.createElement(
+                    "div",
+                    { className: "series-title" },
+                    suggestion.seriesName ? suggestion.seriesName : ""
+                ),
+                React.createElement(
+                    "div",
+                    { className: "title" },
+                    suggestion.title
+                )
             )
         );
     }
@@ -45,10 +50,7 @@ var Example = React.createClass({
             if (!err) {
                 if (data.searchResults) {
                     var results = data.searchResults.map(function (result) {
-                        var seriesName = result.seriesName;
-                        var title = result.title;
-                        return (seriesName ? seriesName : "") + (seriesName && title ? " / " : "") + (title ? title : "");
-                        //return result;
+                        return result;
                     });
                     callback(results);
                 }
@@ -60,8 +62,16 @@ var Example = React.createClass({
         console.info("suggestion:", suggestion);
     },
 
+    onSelect: function onSelect(suggestion) {
+        return suggestion.title;
+    },
+
     render: function render() {
-        return React.createElement(AutoSuggest, { suggestions: this.suggestions, onSuggestion: this.suggested });
+        return React.createElement(
+            AutoSuggest,
+            { suggestions: this.suggestions, onSuggestion: this.suggested, onSelect: this.onSelect },
+            React.createElement(Custom, null)
+        );
     }
 
 });
@@ -22461,9 +22471,6 @@ var AutoSuggest = React.createClass({
     },
 
     handleTerm: function handleTerm(term) {
-        //console.info('AutoSuggest.handleTerm', term);
-        var child = this.props.children;
-
         this.setState({
             term: term
         });
@@ -22471,7 +22478,6 @@ var AutoSuggest = React.createClass({
     },
 
     onResponse: function onResponse(suggestions) {
-        //console.info('AutoSuggest.onResponse', suggestions);
         this.setState({
             index: -1,
             displayDropDown: true,
@@ -22480,7 +22486,6 @@ var AutoSuggest = React.createClass({
     },
 
     handleClick: function handleClick(term) {
-        //console.info('AutoSuggest.handleClick', term);
         this.setState({
             index: -1,
             term: term,
@@ -22494,11 +22499,7 @@ var AutoSuggest = React.createClass({
     },
 
     handleSpecial: function handleSpecial(code) {
-        //console.info('AutoSuggest.handleSpecial');
-
-        //let suggestions = this.props.suggestions(this.state.term);
         var suggestions = this.state.suggestions;
-
         var length = suggestions.length;
         var index = this.state.index;
         var displayDropDown = true;
@@ -22528,11 +22529,16 @@ var AutoSuggest = React.createClass({
             }
         }
 
-        //console.info('children', this.props.children);
-
-        term = index === -1 ? this.state.term : suggestions[index];
-
-        //console.info('term', term, index, suggestions);
+        if (index === -1) {
+            term = this.state.term;
+        } else {
+            var suggestion = suggestions[index];
+            if (this.props.onSelect) {
+                term = this.props.onSelect(suggestion);
+            } else {
+                term = suggestion;
+            }
+        }
 
         this.setState({
             index: index,
@@ -22542,33 +22548,20 @@ var AutoSuggest = React.createClass({
     },
 
     render: function render() {
-        //console.info('AutoSuggest.render');
-
-        /*var children = this.props.children;
-        let elements = [];
-        if (children && children.length > 0) {
-            elements = children.map((child) => {
-                //console.info('child', child);
-                return child;
-            });
-        }*/
-
-        var child = this.props.children;
-        //console.info('child', child);
-
+        var renderer = this.props.children;
         return React.createElement(
             "div",
             { className: "AutoSuggest" },
             React.createElement(SearchBox, {
                 handleTerm: this.handleTerm,
                 handleSpecial: this.handleSpecial,
-                displayTerm: this.state.term
+                value: this.state.term
             }),
             React.createElement(DropDown, { key: "dropdown",
                 handleClick: this.handleClick,
                 suggestions: this.state.suggestions,
                 display: this.state.displayDropDown,
-                renderer: child,
+                renderer: renderer,
                 index: this.state.index
             })
         );
@@ -22586,29 +22579,12 @@ var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["defau
 
 var React = _interopRequire(require("react/addons"));
 
-var Suggestion = React.createClass({
-    displayName: "Suggestion",
-
-    render: function render() {
-        //console.info('Suggestion.render', this.props.suggestion);
-        var suggestion = this.props.suggestion;
-        var classes = ["Suggestion"];
-        if (this.props.selected) {
-            classes.push("selected");
-        }
-        return React.createElement(
-            "div",
-            { className: classes.join(" "), "data-suggestion": suggestion },
-            suggestion
-        );
-    }
-});
+var Suggestion = _interopRequire(require("./Suggestion"));
 
 var DropDown = React.createClass({
     displayName: "DropDown",
 
     handleClick: function handleClick(event) {
-        //console.info('DropDown.handleClick');
         var suggestion = event.target.getAttribute("data-suggestion");
         this.props.handleClick(suggestion);
     },
@@ -22616,41 +22592,21 @@ var DropDown = React.createClass({
     render: function render() {
         var _this = this;
 
-        //console.info('DropDown.render', this.props.suggestions);
         var index = this.props.index;
         var suggestions = this.props.suggestions;
         var renderer = this.props.renderer;
-
-        //console.info('renderer', renderer);
-
         var entries = [];
-
         if (suggestions && suggestions.length > 0) {
-
             entries = suggestions.map(function (suggestion, i) {
-                var classes = ["Suggestion"];
                 var selected = i === index;
-                if (selected) {
-                    classes.push("selected");
-                }
-
                 if (renderer) {
-                    //value = renderer
                     return React.addons.cloneWithProps(renderer, {
-                        className: classes.join(" "),
+                        selected: selected,
                         suggestion: suggestion,
                         key: i,
                         onClick: _this.handleClick
                     });
                 } else {
-                    /*return (
-                        <div onClick={this.handleClick}
-                             data-suggestion={suggestion}
-                             selected={selected}
-                             key={suggestion + i}>
-                            {suggestion}
-                        </div>
-                    );*/
                     return React.createElement(Suggestion, { key: i, suggestion: suggestion, selected: selected });
                 }
             });
@@ -22658,7 +22614,6 @@ var DropDown = React.createClass({
         var styles = {
             display: this.props.display ? "block" : "none"
         };
-
         return React.createElement(
             "div",
             { className: "DropDown", style: styles },
@@ -22669,7 +22624,7 @@ var DropDown = React.createClass({
 
 module.exports = DropDown;
 
-},{"react/addons":7}],182:[function(require,module,exports){
+},{"./Suggestion":183,"react/addons":7}],182:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -22703,7 +22658,9 @@ var SearchBox = React.createClass({
 
     render: function render() {
         //console.info('SearchBox.render', this.props.displayTerm);
-        var value = this.props.displayTerm || "";
+
+        var value = this.props.value || "";
+
         return React.createElement("input", { ref: "searchBox",
             className: "SearchBox",
             onKeyDown: this.keyDown,
@@ -22713,5 +22670,32 @@ var SearchBox = React.createClass({
 });
 
 module.exports = SearchBox;
+
+},{"react":179}],183:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var React = _interopRequire(require("react"));
+
+var Suggestion = React.createClass({
+    displayName: "Suggestion",
+
+    render: function render() {
+        var suggestion = this.props.suggestion;
+        var classes = ["Suggestion"];
+        var selected = this.props.selected;
+        if (selected) {
+            classes.push("selected");
+        }
+        return React.createElement(
+            "div",
+            { className: classes.join(" "), "data-suggestion": suggestion },
+            suggestion
+        );
+    }
+});
+
+module.exports = Suggestion;
 
 },{"react":179}]},{},[1]);
