@@ -178,9 +178,6 @@ describe('AutoSuggest', function() {
         };
 
         var Custom = React.createClass({
-            onSelect() {
-                return this.props.suggestion.title;
-            },
             render() {
                 let classes = ['Suggestion'];
                 if (this.props.selected) {
@@ -226,7 +223,7 @@ describe('AutoSuggest', function() {
         });
 
         var autoSuggest = TestUtils.renderIntoDocument(
-            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion} access={onSelect}>
+            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion} onSelect={onSelect}>
                 <Custom />
             </AutoSuggest>
         );
@@ -237,6 +234,13 @@ describe('AutoSuggest', function() {
             .assertSuggestions(['dog', 'cat', 'chicken'])
             .arrowDown()
             .assertValue('dog')
+            .arrowDown()
+            .assertValue('cat')
+            .arrowDown()
+            .assertValue('chicken')
+            // TODO
+            //.arrowDown()
+            //.assertValue('')
         ;
     });
 

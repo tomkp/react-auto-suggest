@@ -4,10 +4,6 @@ import React from 'react';
 
 let Suggestion = React.createClass({
 
-    onSelect() {
-        return this.props.suggestion;
-    },
-
     render() {
         let suggestion = this.props.suggestion;
         let classes = ['Suggestion'];
