@@ -1,25 +1,6 @@
 import React from 'react/addons';
+import Suggestion from './Suggestion';
 
-
-
-
-
-let Suggestion = React.createClass({
-
-    render() {
-        //console.info('Suggestion.render', this.props.suggestion);
-        var suggestion = this.props.suggestion;
-        let classes = ['Suggestion'];
-        if (this.props.selected) {
-            classes.push('selected');
-        }
-        return (
-            <div className={classes.join(' ')} data-suggestion={suggestion}>
-                {suggestion}
-            </div>
-        );
-    }
-});
 
 
 let DropDown = React.createClass({
@@ -29,6 +10,7 @@ let DropDown = React.createClass({
         let suggestion = event.target.getAttribute('data-suggestion');
         this.props.handleClick(suggestion);
     },
+
 
     render() {
         //console.info('DropDown.render', this.props.suggestions);
@@ -44,30 +26,19 @@ let DropDown = React.createClass({
 
             entries = suggestions
                 .map((suggestion, i) => {
-                    let classes = ['Suggestion'];
+
                     let selected = (i === index);
-                    if (selected) {
-                        classes.push('selected');
-                    }
 
                     if (renderer) {
-                        //value = renderer
                         return React.addons.cloneWithProps(renderer, {
-                            className: classes.join(' '),
+                            selected: selected,
+                            onSelected: this.props.onSelected,
                             suggestion: suggestion,
                             key: i,
                             onClick: this.handleClick
                         });
                     } else {
-                        /*return (
-                            <div onClick={this.handleClick}
-                                 data-suggestion={suggestion}
-                                 selected={selected}
-                                 key={suggestion + i}>
-                                {suggestion}
-                            </div>
-                        );*/
-                        return <Suggestion key={i} suggestion={suggestion} selected={selected} />
+                        return <Suggestion key={i} suggestion={suggestion} selected={selected} onSelected={this.props.onSelected} />
                     }
 
                 });

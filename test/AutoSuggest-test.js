@@ -151,6 +151,9 @@ describe('AutoSuggest', function() {
 
     it('should allow custom dropdowns', function() {
         var Custom = React.createClass({
+            onSelect() {
+                return this.props.suggestion;
+            },
             render() {
                 return <div className="Suggestion">{this.props.suggestion}</div>;
             }
@@ -175,8 +178,15 @@ describe('AutoSuggest', function() {
         };
 
         var Custom = React.createClass({
+            onSelect() {
+                return this.props.suggestion.title;
+            },
             render() {
-                return <div className={this.props.className} data-suggestion={this.props.suggestion.title}>{this.props.suggestion.title}</div>;
+                let classes = ['Suggestion'];
+                if (this.props.selected) {
+                    classes.push('selected');
+                }
+                return <div className={classes.join(' ')} data-suggestion={this.props.suggestion.title}>{this.props.suggestion.title}</div>;
             }
         });
 
@@ -193,20 +203,30 @@ describe('AutoSuggest', function() {
     });
 
 
+
     it('should handle displaying term from custom dropdowns', function() {
         var fetchSuggestions = function(value, callback) {
-            callback([{title:'one'}, {title:'two'}, {title:'three'}]);
+            callback([{title:'dog'}, {title:'cat'}, {title:'chicken'}]);
+        };
+
+        var onSelect = function(suggestion) {
+            return suggestion.title;
         };
 
         var Custom = React.createClass({
+
             render() {
+                let classes = ['Suggestion'];
+                if (this.props.selected) {
+                    classes.push('selected');
+                }
                 var suggestion = this.props.suggestion;
-                return <div className="Suggestion" data-suggestion={suggestion.title}>{suggestion.title}</div>;
+                return <div className={classes.join(' ')} data-suggestion={suggestion.title}>{suggestion.title}</div>;
             }
         });
 
         var autoSuggest = TestUtils.renderIntoDocument(
-            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
+            <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion} access={onSelect}>
                 <Custom />
             </AutoSuggest>
         );
@@ -214,13 +234,11 @@ describe('AutoSuggest', function() {
         new Asserter(autoSuggest)
             .enterNewValue('c')
             .assertValue('c')
-            .assertSuggestions(['one', 'two', 'three'])
+            .assertSuggestions(['dog', 'cat', 'chicken'])
             .arrowDown()
-            // TODO
-            //.assertValue('one')
+            .assertValue('dog')
         ;
     });
-
 
 
 });

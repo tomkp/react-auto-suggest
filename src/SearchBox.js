@@ -31,7 +31,9 @@ let SearchBox = React.createClass({
 
     render() {
         //console.info('SearchBox.render', this.props.displayTerm);
-        let value = this.props.displayTerm || '';
+
+        let value = this.props.value || '';
+
         return <input ref="searchBox"
             className="SearchBox"
             onKeyDown={this.keyDown}

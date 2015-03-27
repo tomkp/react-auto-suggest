@@ -18,10 +18,15 @@ let AutoSuggest = React.createClass({
         }
     },
 
+    onSelected(term) {
+        console.info('onSelected', term);
+        //this.setState({
+        //    term: term
+        //});
+    },
 
     handleTerm(term) {
         //console.info('AutoSuggest.handleTerm', term);
-        let child = this.props.children;
 
         this.setState({
             term: term
@@ -59,8 +64,8 @@ let AutoSuggest = React.createClass({
     handleSpecial(code) {
         //console.info('AutoSuggest.handleSpecial');
 
-        //let suggestions = this.props.suggestions(this.state.term);
         let suggestions = this.state.suggestions;
+
 
         let length = suggestions.length;
         let index = this.state.index;
@@ -93,12 +98,17 @@ let AutoSuggest = React.createClass({
             }
         }
 
-        //console.info('children', this.props.children);
+        if (index === -1) {
+            term = this.state.term;
+        } else {
+            var suggestion = suggestions[index];
+            if (this.props.access) {
+                term = this.props.access(suggestion);
+            } else {
+                term = suggestion;
+            }
+        }
 
-
-        term = index === -1?this.state.term:suggestions[index];
-
-        //console.info('term', term, index, suggestions);
 
         this.setState({
             index: index,
@@ -111,30 +121,20 @@ let AutoSuggest = React.createClass({
     render() {
         //console.info('AutoSuggest.render');
 
-        /*var children = this.props.children;
-        let elements = [];
-        if (children && children.length > 0) {
-            elements = children.map((child) => {
-                //console.info('child', child);
-                return child;
-            });
-        }*/
-
-        let child = this.props.children;
-        //console.info('child', child);
+        let renderer = this.props.children;
 
         return (
             <div className="AutoSuggest">
                 <SearchBox
                     handleTerm={this.handleTerm}
                     handleSpecial={this.handleSpecial}
-                    displayTerm={this.state.term}
+                    value={this.state.term}
                 />
                 <DropDown key="dropdown"
                     handleClick={this.handleClick}
                     suggestions={this.state.suggestions}
                     display={this.state.displayDropDown}
-                    renderer={child}
+                    renderer={renderer}
                     index={this.state.index}
                 />
             </div>
