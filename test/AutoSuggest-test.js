@@ -4,7 +4,7 @@ let { TestUtils } = React.addons;
 
 import AutoSuggest from '../src/AutoSuggest';
 
-import Asserter from './Asserter';
+import Asserter from '../util/Asserter';
 
 
 
