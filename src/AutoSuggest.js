@@ -109,7 +109,6 @@ let AutoSuggest = React.createClass({
             }
         }
 
-
         this.setState({
             index: index,
             term: term,
