@@ -19,11 +19,12 @@ let AutoSuggest = React.createClass({
     },
 
 
-    handleTerm(term) {
+    handleTerm(value) {
         this.setState({
-            term: term
+            term: value,
+            value: value
         });
-        this.props.suggestions(term, this.onResponse);
+        this.props.suggestions(value, this.onResponse);
     },
 
 
@@ -85,7 +86,7 @@ let AutoSuggest = React.createClass({
         }
 
         if (index === -1) {
-            term = this.state.term;
+            term = this.state.value;
         } else {
             var suggestion = suggestions[index];
             if (this.props.onSelect) {

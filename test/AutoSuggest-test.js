@@ -6,23 +6,23 @@ import AutoSuggest from '../src/AutoSuggest';
 
 import Asserter from '../util/Asserter';
 
-
+alert('innit');
 
 describe('AutoSuggest', function() {
 
 
-    var fetchSuggestions = function(value, callback) {
+    const fetchSuggestions = function(value, callback) {
         callback(['one', 'two', 'three']);
     };
 
 
-    var onSuggestion = function(suggestion) {
+    const onSuggestion = function(suggestion) {
         console.info('onSuggestion', suggestion);
     };
 
 
     it('should render', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -31,7 +31,7 @@ describe('AutoSuggest', function() {
 
 
     it('should not display the DropDown', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -42,7 +42,7 @@ describe('AutoSuggest', function() {
 
 
     it('should display the DropDown when text is entered', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
         new Asserter(autoSuggest)
@@ -54,7 +54,7 @@ describe('AutoSuggest', function() {
 
 
     it('should display the suggestions when the DropDown is displayed', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -66,7 +66,7 @@ describe('AutoSuggest', function() {
 
 
     it('should select the next suggestion when the down key is pressed', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -88,7 +88,7 @@ describe('AutoSuggest', function() {
 
 
     it('should select the previous suggestion when the up key is pressed', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -110,7 +110,7 @@ describe('AutoSuggest', function() {
 
 
     it('should display entered text', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -121,12 +121,12 @@ describe('AutoSuggest', function() {
 
 
     it('should pass entered text to suggestions function', function(done) {
-        var fetchSuggestions = function(suggestion) {
+        const fetchSuggestions = function(suggestion) {
             expect(suggestion).to.equal('cat');
             done();
         };
 
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -137,7 +137,7 @@ describe('AutoSuggest', function() {
 
 
     it('should hide the dropdown when the esc key is pressed', function() {
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -150,18 +150,15 @@ describe('AutoSuggest', function() {
 
 
     it('should allow custom dropdowns', function() {
-        var Custom = React.createClass({
-            onSelect() {
-                return this.props.suggestion;
-            },
+        const CustomSuggestionRenderer = React.createClass({
             render() {
                 return <div className="Suggestion">{this.props.suggestion}</div>;
             }
         });
 
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
-                <Custom />
+                <CustomSuggestionRenderer />
             </AutoSuggest>
         );
 
@@ -173,23 +170,19 @@ describe('AutoSuggest', function() {
 
 
     it('should allow custom dropdowns for arrays of json', function() {
-        var fetchSuggestions = function(value, callback) {
+        const fetchSuggestions = function(value, callback) {
             callback([{title:'one'}, {title:'two'}, {title:'three'}]);
         };
 
-        var Custom = React.createClass({
+        const CustomSuggestionRenderer = React.createClass({
             render() {
-                let classes = ['Suggestion'];
-                if (this.props.selected) {
-                    classes.push('selected');
-                }
-                return <div className={classes.join(' ')} data-suggestion={this.props.suggestion.title}>{this.props.suggestion.title}</div>;
+                return <div className="Suggestion" data-suggestion={this.props.suggestion.title}>{this.props.suggestion.title}</div>;
             }
         });
 
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
-                <Custom />
+                <CustomSuggestionRenderer />
             </AutoSuggest>
         );
 
@@ -202,29 +195,25 @@ describe('AutoSuggest', function() {
 
 
     it('should handle displaying term from custom dropdowns', function() {
-        var fetchSuggestions = function(value, callback) {
+        const fetchSuggestions = function(value, callback) {
             callback([{title:'dog'}, {title:'cat'}, {title:'chicken'}]);
         };
 
-        var onSelect = function(suggestion) {
+        const onSelect = function(suggestion) {
             return suggestion.title;
         };
 
-        var Custom = React.createClass({
-
+        const CustomSuggestionRenderer = React.createClass({
             render() {
-                let classes = ['Suggestion'];
-                if (this.props.selected) {
-                    classes.push('selected');
-                }
-                var suggestion = this.props.suggestion;
+                let classes = ['Suggestion', this.props.selected?'selected':''];
+                const suggestion = this.props.suggestion;
                 return <div className={classes.join(' ')} data-suggestion={suggestion.title}>{suggestion.title}</div>;
             }
         });
 
-        var autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion} onSelect={onSelect}>
-                <Custom />
+                <CustomSuggestionRenderer />
             </AutoSuggest>
         );
 
@@ -238,9 +227,8 @@ describe('AutoSuggest', function() {
             .assertValue('cat')
             .arrowDown()
             .assertValue('chicken')
-            // TODO
-            //.arrowDown()
-            //.assertValue('')
+            .arrowDown()
+            .assertValue('c')
         ;
     });
 
