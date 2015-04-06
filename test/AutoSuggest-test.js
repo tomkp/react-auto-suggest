@@ -1,12 +1,9 @@
 import expect from 'expect.js';
 import React from 'react/addons';
 let { TestUtils } = React.addons;
-
 import AutoSuggest from '../src/AutoSuggest';
-
 import Asserter from '../util/Asserter';
 
-alert('innit');
 
 describe('AutoSuggest', function() {
 
