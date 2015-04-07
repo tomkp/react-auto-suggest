@@ -107,7 +107,7 @@ let AutoSuggest = React.createClass({
     render() {
         let renderer = this.props.children;
         return (
-            <div className="AutoSuggest">
+            <div className={this.constructor.displayName}>
                 <SearchBox
                     handleTerm={this.handleTerm}
                     handleSpecial={this.handleSpecial}

@@ -6,7 +6,7 @@ let Suggestion = React.createClass({
 
     render() {
         let suggestion = this.props.suggestion;
-        let classes = ['Suggestion'];
+        let classes = [this.constructor.displayName];
         let selected = this.props.selected;
         if (selected) {
             classes.push('selected');

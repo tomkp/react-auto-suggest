@@ -30,7 +30,7 @@ let SearchBox = React.createClass({
     render() {
         let value = this.props.value || '';
         return <input ref="searchBox"
-            className="SearchBox"
+            className={this.constructor.displayName}
             onKeyDown={this.keyDown}
             onChange={this.handleChange}
             value={value} />

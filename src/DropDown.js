@@ -35,7 +35,7 @@ let DropDown = React.createClass({
         let styles = {
             display: this.props.display ? 'block' : 'none'
         };
-        return <div className="DropDown" style={styles}>{entries}</div>;
+        return <div className={this.constructor.displayName} style={styles}>{entries}</div>;
     }
 });
 
