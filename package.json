@@ -14,26 +14,30 @@
     "auto-suggest",
     "es6"
   ],
+  "bugs": {
+    "url": "https://github.com/tomkp/react-auto-suggest/issues"
+  },
+  "homepage": "https://github.com/tomkp/react-auto-suggest",
   "dependencies": {
     "jsonp": "^0.2.0",
     "react": "^0.13.1"
   },
   "devDependencies": {
-    "babel-core": "^5.0.9",
-    "babelify": "^6.0.1",
-    "browserify": "^9.0.7",
-    "coveralls": "^2.11.2",
+    "babel": "^4.7.9",
+    "babel-core": "^4.6.6",
+    "babelify": "^5.0.4",
+    "mochify": "^2.6.1",
+    "browserify": "^9.0.3",
     "expect.js": "^0.3.1",
-    "mochify": "^2.7.0",
+    "react-tools": "^0.13.0-rc2",
     "mochify-istanbul": "^2.1.1",
-    "react-tools": "^0.13.1"
+    "coveralls": "^2.11.2"
   },
   "scripts": {
     "test": "mochify -R spec",
     "test-watch": "mochify -R spec --watch",
     "cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info",
     "demo": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh"
-
   },
   "browserify": {
     "transform": [
