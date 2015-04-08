@@ -21,32 +21,32 @@ export default class Asserter {
         return this;
     }
 
-    arrowLeft() {
+    pressArrowLeft() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 37});
         return this;
     }
 
-    arrowUp() {
+    pressArrowUp() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 38});
         return this;
     }
 
-    arrowRight() {
+    pressArrowRight() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 39});
         return this;
     }
 
-    arrowDown() {
+    pressArrowDown() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 40});
         return this;
     }
 
-    esc() {
+    pressEscape() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 27});
         return this;
     }
 
-    enter() {
+    pressEnter() {
         TestUtils.Simulate.keyDown(this.searchBox, {keyCode: 13});
         return this;
     }
