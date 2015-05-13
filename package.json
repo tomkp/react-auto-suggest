@@ -35,9 +35,10 @@
   },
   "scripts": {
     "test": "mochify -R spec",
-    "test-watch": "mochify -R spec --watch",
-    "cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info",
-    "demo": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh"
+    "test:watch": "mochify -R spec --watch",
+    "test:cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info",
+    "demo": "browserify demo/Example.js -t -o demo/bundle.js",
+    "demo:publish": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh"
   },
   "browserify": {
     "transform": [
