@@ -1,10 +1,10 @@
 import React from 'react';
-import AutoSuggest from '../src/AutoSuggest';
+import AutoSuggest from '../';
 import jsonp from 'jsonp';
 
 
 
-var Custom = React.createClass({
+let Custom = React.createClass({
 
     render() {
         var suggestion = this.props.suggestion;
@@ -26,7 +26,7 @@ var Custom = React.createClass({
 });
 
 
-var Example = React.createClass({
+let Example = React.createClass({
 
     suggestions: function(value, callback) {
         console.info('Example.suggestions', value);
