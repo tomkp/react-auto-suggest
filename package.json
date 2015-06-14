@@ -1,7 +1,7 @@
 {
   "name": "react-auto-suggest",
   "description": "React auto-suggest component",
-  "main": "src/AutoSuggest.js",
+  "main": "index.js",
   "version": "0.0.6",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
     "react",
     "react-component",
     "auto-suggest",
+    "react-auto-suggest",
     "es6"
   ],
   "bugs": {
