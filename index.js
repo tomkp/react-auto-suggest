@@ -1,1 +1,3 @@
-module.exports = require('./src/AutoSuggest.js');
+import AutoSuggest from './src/AutoSuggest.js';
+
+module.exports = AutoSuggest;
