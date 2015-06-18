@@ -1,7 +1,7 @@
 {
   "name": "react-auto-suggest",
   "description": "React auto-suggest component",
-  "main": "index.js",
+  "main": "./lib/AutoSuggest.js",
   "version": "0.0.6",
   "repository": {
     "type": "git",
@@ -35,11 +35,14 @@
     "coveralls": "^2.11.2"
   },
   "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
     "test": "mochify -R spec",
     "test:watch": "mochify -R spec --watch",
     "test:cover": "node cover.js && cat lcov.info | coveralls && rm lcov.info",
     "demo": "browserify demo/Example.js -t -o demo/bundle.js",
-    "demo:publish": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh"
+    "demo:publish": "browserify demo/Example.js -t -o demo/bundle.js && surge demo changeable-heart.surge.sh",
+    "release:patch": "npm test && npm run compile && npm version patch && git push && npm publish"
   },
   "browserify": {
     "transform": [

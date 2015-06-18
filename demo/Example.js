@@ -1,5 +1,5 @@
 import React from 'react';
-import AutoSuggest from '../';
+import AutoSuggest from '../lib/AutoSuggest.js';
 import jsonp from 'jsonp';
 
 
@@ -12,10 +12,8 @@ let Custom = React.createClass({
         if (this.props.selected) {
             classes.push('selected');
         }
-        let url = 'http://images.metadata.sky.com/pd-image/' + suggestion.uuid + '/l/100';
         return (
             <div className={classes.join(' ')} data-suggestion={suggestion.title}>
-                <img className="thumbnail" src={url} />
                 <span className="titles">
                     <div className="series-title">{suggestion.seriesName?suggestion.seriesName:''}</div>
                     <div className="title">{suggestion.title}</div>
