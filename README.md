@@ -1,4 +1,4 @@
-# react-auto-suggest
+# React Auto Suggest
 
 
 React auto-suggest component in ES6
