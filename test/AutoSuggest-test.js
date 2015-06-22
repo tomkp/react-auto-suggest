@@ -44,8 +44,7 @@ describe('AutoSuggest', function() {
         );
         new Asserter(autoSuggest)
             .assertDropDownNotDisplayed()
-            .enterNewValue('C')
-            .assertDropDownDisplayed()
+            .enterNewValue('C').assertDropDownDisplayed()
         ;
     });
 
@@ -56,8 +55,7 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('C')
-            .assertSuggestions(['one', 'two', 'three'])
+            .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
 
@@ -68,18 +66,12 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('C')
-            .assertSelectedSuggestion()
-            .pressArrowDown()
-            .assertSelectedSuggestion('one')
-            .pressArrowDown()
-            .assertSelectedSuggestion('two')
-            .pressArrowDown()
-            .assertSelectedSuggestion('three')
-            .pressArrowDown()
-            .assertSelectedSuggestion()
-            .pressArrowDown()
-            .assertSelectedSuggestion('one')
+            .enterNewValue('C').assertSelectedSuggestion()
+            .pressArrowDown().assertSelectedSuggestion('one')
+            .pressArrowDown().assertSelectedSuggestion('two')
+            .pressArrowDown().assertSelectedSuggestion('three')
+            .pressArrowDown().assertSelectedSuggestion()
+            .pressArrowDown().assertSelectedSuggestion('one')
         ;
     });
 
@@ -90,18 +82,12 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('C')
-            .assertSelectedSuggestion()
-            .pressArrowUp()
-            .assertSelectedSuggestion('three')
-            .pressArrowUp()
-            .assertSelectedSuggestion('two')
-            .pressArrowUp()
-            .assertSelectedSuggestion('one')
-            .pressArrowUp()
-            .assertSelectedSuggestion()
-            .pressArrowUp()
-            .assertSelectedSuggestion('three')
+            .enterNewValue('C').assertSelectedSuggestion()
+            .pressArrowUp().assertSelectedSuggestion('three')
+            .pressArrowUp().assertSelectedSuggestion('two')
+            .pressArrowUp().assertSelectedSuggestion('one')
+            .pressArrowUp().assertSelectedSuggestion()
+            .pressArrowUp().assertSelectedSuggestion('three')
         ;
     });
 
@@ -112,8 +98,7 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('cat')
-            .assertValue('cat');
+            .enterNewValue('cat').assertValue('cat');
     });
 
 
@@ -128,8 +113,7 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('cat')
-            .assertValue('cat');
+            .enterNewValue('cat').assertValue('cat');
     });
 
 
@@ -139,10 +123,8 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('cat')
-            .assertDropDownDisplayed()
-            .pressEscape()
-            .assertDropDownNotDisplayed()
+            .enterNewValue('cat').assertDropDownDisplayed()
+            .pressEscape().assertDropDownNotDisplayed()
     });
 
 
@@ -160,8 +142,7 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('C')
-            .assertSuggestions(['one', 'two', 'three'])
+            .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
 
@@ -184,8 +165,7 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('C')
-            .assertSuggestions(['one', 'two', 'three'])
+            .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
 
@@ -193,7 +173,7 @@ describe('AutoSuggest', function() {
 
     it('should handle displaying term from custom dropdowns', function() {
         const fetchSuggestions = function(value, callback) {
-            callback([{title:'dog'}, {title:'cat'}, {title:'chicken'}]);
+            callback([{title:'cow'}, {title:'cat'}, {title:'chicken'}]);
         };
 
         const onSelect = function(suggestion) {
@@ -215,17 +195,11 @@ describe('AutoSuggest', function() {
         );
 
         new Asserter(autoSuggest)
-            .enterNewValue('c')
-            .assertValue('c')
-            .assertSuggestions(['dog', 'cat', 'chicken'])
-            .pressArrowDown()
-            .assertValue('dog')
-            .pressArrowDown()
-            .assertValue('cat')
-            .pressArrowDown()
-            .assertValue('chicken')
-            .pressArrowDown()
-            .assertValue('c')
+            .enterNewValue('c').assertValue('c').assertSuggestions(['cow', 'cat', 'chicken'])
+            .pressArrowDown().assertValue('cow')
+            .pressArrowDown().assertValue('cat')
+            .pressArrowDown().assertValue('chicken')
+            .pressArrowDown().assertValue('c')
         ;
     });
 
