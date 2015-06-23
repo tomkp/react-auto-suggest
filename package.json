@@ -28,12 +28,12 @@
     "babel": "^4.7.9",
     "babel-core": "^4.6.6",
     "babelify": "^5.0.4",
-    "mochify": "^2.6.1",
     "browserify": "^9.0.3",
-    "expect.js": "^0.3.1",
-    "react-tools": "^0.13.0-rc2",
+    "chai": "^3.0.0",
+    "coveralls": "^2.11.2",
+    "mochify": "^2.6.1",
     "mochify-istanbul": "^2.1.1",
-    "coveralls": "^2.11.2"
+    "react-tools": "^0.13.0-rc2"
   },
   "scripts": {
     "compile": "babel -d lib/ src/",

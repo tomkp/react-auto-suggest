@@ -1,8 +1,12 @@
-import expect from 'expect.js';
+
 import React from 'react/addons';
-let { TestUtils } = React.addons;
 import AutoSuggest from '../src/AutoSuggest';
 import Asserter from '../util/Asserter';
+import chai from 'chai';
+
+const { TestUtils } = React.addons;
+const expect = chai.expect;
+
 
 
 describe('AutoSuggest', function() {

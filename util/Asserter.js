@@ -1,6 +1,8 @@
-import expect from 'expect.js';
+
 import React from 'react/addons';
-let { TestUtils } = React.addons;
+import chai from 'chai';
+const { TestUtils } = React.addons;
+const expect = chai.expect;
 
 
 export default class Asserter {
@@ -12,6 +14,7 @@ export default class Asserter {
     }
 
     assertValue(value) {
+        console.debug(`is the value ${value}?`);
         expect(this.searchBox.getDOMNode().value).to.equal(value);
         return this;
     }
