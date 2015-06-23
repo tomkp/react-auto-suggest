@@ -1,7 +1,7 @@
 
 import React from 'react/addons';
 import AutoSuggest from '../src/AutoSuggest';
-import Asserter from '../util/Asserter';
+import Asserter from './assertions/Asserter';
 import chai from 'chai';
 
 const { TestUtils } = React.addons;
