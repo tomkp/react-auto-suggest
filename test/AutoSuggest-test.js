@@ -46,6 +46,7 @@ describe('AutoSuggest', function() {
         const autoSuggest = TestUtils.renderIntoDocument(
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
+
         new Asserter(autoSuggest)
             .assertDropDownNotDisplayed()
             .enterNewValue('C').assertDropDownDisplayed()
@@ -206,6 +207,4 @@ describe('AutoSuggest', function() {
             .pressArrowDown().assertValue('c')
         ;
     });
-
-
 });
