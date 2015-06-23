@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 
 
-describe('AutoSuggest', function() {
+describe('AutoSuggest', () => {
 
 
     const fetchSuggestions = function(value, callback) {
