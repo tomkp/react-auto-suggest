@@ -26,7 +26,8 @@
 
         .AutoSuggest {
             width: 480px;
-            margin: 4rem;
+            margin: 1rem;
+            display: inline-block;
         }
 
         .SearchBox {
@@ -37,9 +38,15 @@
 
         .DropDown {
             z-index: 2;
+            width: 100%;
             background: #fff;
             border: 1px solid #ddd;
             color: #000;
+            position: absolute;
+
+            -moz-box-shadow: 0 2px 5px #888;
+            -webkit-box-shadow: 0 2px 5px #888;
+            box-shadow: 0 2px 5px #888;
         }
 
         .Suggestion {
@@ -55,20 +62,6 @@
             background: #ddd;
         }
 
-
-
-        .Suggestion {
-
-        }
-
-        .titles {
-
-        }
-
-        .series-title {
-
-        }
-
         .title {
             color: #666;
         }
@@ -76,6 +69,7 @@
         .thumbnail {
             float: left;
         }
+
 
     </style>
 </head>
