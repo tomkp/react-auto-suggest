@@ -1,7 +1,7 @@
 {
   "name": "react-auto-suggest",
   "description": "React auto-suggest component",
-  "main": "./lib/AutoSuggest.js",
+  "main": "index.js",
   "version": "0.0.8",
   "repository": {
     "type": "git",

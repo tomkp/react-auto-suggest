@@ -1,3 +1,3 @@
-import AutoSuggest from './src/AutoSuggest.js';
+import AutoSuggest from './lib/AutoSuggest.js';
 
 module.exports = AutoSuggest;

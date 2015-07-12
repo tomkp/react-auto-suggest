@@ -1,5 +1,5 @@
 import React from 'react';
-import AutoSuggest from '../lib/AutoSuggest.js';
+import AutoSuggest from '../';
 import jsonp from 'jsonp';
 
 
