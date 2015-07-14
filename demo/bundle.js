@@ -79,9 +79,7 @@ React.render(React.createElement(Example, null), document.body);
 },{"../":2,"jsonp":8,"react":184}],2:[function(require,module,exports){
 "use strict";
 
-var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-
-var AutoSuggest = _interopRequire(require("./lib/AutoSuggest.js"));
+var AutoSuggest = require("./lib/AutoSuggest.js");
 
 module.exports = AutoSuggest;
 
