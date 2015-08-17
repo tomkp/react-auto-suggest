@@ -46,6 +46,7 @@ let Example = React.createClass({
     },
 
     onSelect: function(suggestion) {
+        console.info('selected:', suggestion);
         return suggestion.title;
     },
 
