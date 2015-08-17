@@ -6,6 +6,13 @@ import jsonp from 'jsonp';
 
 let Custom = React.createClass({
 
+    onClick(event) {
+        console.info('Custom.onClick', event);
+        var suggestion = this.props.suggestion;
+        this.props.onClick(suggestion.title);
+    },
+
+
     render() {
         var suggestion = this.props.suggestion;
         let classes = ['Suggestion'];
@@ -13,7 +20,7 @@ let Custom = React.createClass({
             classes.push('selected');
         }
         return (
-            <div className={classes.join(' ')} data-suggestion={suggestion.title}>
+            <div className={classes.join(' ')} data-suggestion={suggestion.title} onClick={this.onClick} >
                 <span className="titles">
                     <div className="series-title">{suggestion.seriesName?suggestion.seriesName:''}</div>
                     <div className="title">{suggestion.title}</div>

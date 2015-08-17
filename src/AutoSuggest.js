@@ -37,7 +37,7 @@ let AutoSuggest = React.createClass({
     },
 
 
-    handleClick(term) {
+    onClick(term) {
         this.setState({
             index: -1,
             term: term,
@@ -114,7 +114,7 @@ let AutoSuggest = React.createClass({
                     value={this.state.term}
                 />
                 <DropDown key="dropdown"
-                    handleClick={this.handleClick}
+                    onClick={this.onClick}
                     suggestions={this.state.suggestions}
                     display={this.state.displayDropDown}
                     renderer={renderer}

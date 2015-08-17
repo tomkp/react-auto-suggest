@@ -1,8 +1,14 @@
 import React from 'react';
 
 
-
 let Suggestion = React.createClass({
+
+
+    onClick(event) {
+        let suggestion = this.props.suggestion;
+        this.props.onClick(suggestion);
+    },
+
 
     render() {
         let suggestion = this.props.suggestion;
@@ -12,9 +18,9 @@ let Suggestion = React.createClass({
             classes.push('selected');
         }
         return (
-            <div className={classes.join(' ')} data-suggestion={suggestion}>
+            <a className={classes.join(' ')} data-suggestion={suggestion} onClick={this.onClick}>
                 {suggestion}
-            </div>
+            </a>
         );
     }
 });

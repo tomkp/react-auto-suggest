@@ -12,6 +12,12 @@ var jsonp = _interopRequire(require("jsonp"));
 var Custom = React.createClass({
     displayName: "Custom",
 
+    onClick: function onClick(event) {
+        console.info("Custom.onClick", event);
+        var suggestion = this.props.suggestion;
+        this.props.onClick(suggestion.title);
+    },
+
     render: function render() {
         var suggestion = this.props.suggestion;
         var classes = ["Suggestion"];
@@ -20,7 +26,7 @@ var Custom = React.createClass({
         }
         return React.createElement(
             "div",
-            { className: classes.join(" "), "data-suggestion": suggestion.title },
+            { className: classes.join(" "), "data-suggestion": suggestion.title, onClick: this.onClick },
             React.createElement(
                 "span",
                 { className: "titles" },
@@ -129,7 +135,7 @@ var AutoSuggest = React.createClass({
         });
     },
 
-    handleClick: function handleClick(term) {
+    onClick: function onClick(term) {
         this.setState({
             index: -1,
             term: term,
@@ -198,7 +204,7 @@ var AutoSuggest = React.createClass({
             handleSpecial: this.handleSpecial,
             value: this.state.term
         }), React.createElement(DropDown, { key: "dropdown",
-            handleClick: this.handleClick,
+            onClick: this.onClick,
             suggestions: this.state.suggestions,
             display: this.state.displayDropDown,
             renderer: renderer,
@@ -225,9 +231,8 @@ var Suggestion = _interopRequire(require("./Suggestion"));
 var DropDown = React.createClass({
     displayName: "DropDown",
 
-    handleClick: function handleClick(event) {
-        var suggestion = event.target.getAttribute("data-suggestion");
-        this.props.handleClick(suggestion);
+    onClick: function onClick(suggestion) {
+        this.props.onClick(suggestion);
     },
 
     render: function render() {
@@ -245,10 +250,10 @@ var DropDown = React.createClass({
                         selected: selected,
                         suggestion: suggestion,
                         key: i,
-                        onClick: _this.handleClick
+                        onClick: _this.onClick
                     });
                 } else {
-                    return React.createElement(Suggestion, { key: i, suggestion: suggestion, selected: selected });
+                    return React.createElement(Suggestion, { key: i, suggestion: suggestion, selected: selected, onClick: _this.onClick });
                 }
             });
         }
@@ -317,6 +322,11 @@ var React = _interopRequire(require("react"));
 var Suggestion = React.createClass({
     displayName: "Suggestion",
 
+    onClick: function onClick(event) {
+        var suggestion = this.props.suggestion;
+        this.props.onClick(suggestion);
+    },
+
     render: function render() {
         var suggestion = this.props.suggestion;
         var classes = [this.constructor.displayName];
@@ -324,7 +334,7 @@ var Suggestion = React.createClass({
         if (selected) {
             classes.push("selected");
         }
-        return React.createElement("div", { className: classes.join(" "), "data-suggestion": suggestion }, suggestion);
+        return React.createElement("a", { className: classes.join(" "), "data-suggestion": suggestion, onClick: this.onClick }, suggestion);
     }
 });
 

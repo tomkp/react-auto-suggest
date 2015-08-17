@@ -5,9 +5,8 @@ import Suggestion from './Suggestion';
 
 let DropDown = React.createClass({
 
-    handleClick(event) {
-        let suggestion = event.target.getAttribute('data-suggestion');
-        this.props.handleClick(suggestion);
+    onClick(suggestion) {
+        this.props.onClick(suggestion);
     },
 
 
@@ -25,10 +24,10 @@ let DropDown = React.createClass({
                             selected: selected,
                             suggestion: suggestion,
                             key: i,
-                            onClick: this.handleClick
+                            onClick: this.onClick
                         });
                     } else {
-                        return <Suggestion key={i} suggestion={suggestion} selected={selected} />
+                        return <Suggestion key={i} suggestion={suggestion} selected={selected} onClick={this.onClick} />
                     }
                 });
         }
