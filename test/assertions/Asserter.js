@@ -8,9 +8,10 @@ const expect = chai.expect;
 export default class Asserter {
 
 
-    constructor(autoSuggest) {
-        this.searchBox = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'SearchBox');
-        this.dropDown = TestUtils.findRenderedDOMComponentWithClass(autoSuggest, 'DropDown');
+    constructor(jsx) {
+        this.autoSuggest = TestUtils.renderIntoDocument(jsx);
+        this.searchBox = TestUtils.findRenderedDOMComponentWithClass(this.autoSuggest, 'SearchBox');
+        this.dropDown = TestUtils.findRenderedDOMComponentWithClass(this.autoSuggest, 'DropDown');
     }
 
     assertValue(value) {

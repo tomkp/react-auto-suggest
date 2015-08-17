@@ -23,7 +23,7 @@ describe('AutoSuggest', () => {
 
 
     it('should render', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -32,7 +32,7 @@ describe('AutoSuggest', () => {
 
 
     it('should not display the DropDown', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -43,7 +43,7 @@ describe('AutoSuggest', () => {
 
 
     it('should display the DropDown when text is entered', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -55,7 +55,7 @@ describe('AutoSuggest', () => {
 
 
     it('should display the suggestions when the DropDown is displayed', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -66,7 +66,7 @@ describe('AutoSuggest', () => {
 
 
     it('should select the next suggestion when the down key is pressed', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -82,7 +82,7 @@ describe('AutoSuggest', () => {
 
 
     it('should select the previous suggestion when the up key is pressed', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -98,7 +98,7 @@ describe('AutoSuggest', () => {
 
 
     it('should display entered text', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -113,7 +113,7 @@ describe('AutoSuggest', () => {
             done();
         };
 
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -123,7 +123,7 @@ describe('AutoSuggest', () => {
 
 
     it('should hide the dropdown when the esc key is pressed', () => {
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
@@ -140,7 +140,7 @@ describe('AutoSuggest', () => {
             }
         });
 
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
                 <CustomSuggestionRenderer />
             </AutoSuggest>
@@ -163,7 +163,7 @@ describe('AutoSuggest', () => {
             }
         });
 
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}>
                 <CustomSuggestionRenderer />
             </AutoSuggest>
@@ -193,7 +193,7 @@ describe('AutoSuggest', () => {
             }
         });
 
-        const autoSuggest = TestUtils.renderIntoDocument(
+        const autoSuggest = (
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion} onSelect={onSelect}>
                 <CustomSuggestionRenderer />
             </AutoSuggest>
