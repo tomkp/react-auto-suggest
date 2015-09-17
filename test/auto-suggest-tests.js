@@ -1,7 +1,7 @@
 
 import React from 'react/addons';
 import AutoSuggest from '../src/AutoSuggest';
-import Asserter from './assertions/Asserter';
+import asserter from './assertions/Asserter';
 import chai from 'chai';
 
 const { TestUtils } = React.addons;
@@ -27,7 +27,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest);
+        asserter(autoSuggest);
     });
 
 
@@ -36,7 +36,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .assertDropDownNotDisplayed()
         ;
     });
@@ -47,7 +47,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .assertDropDownNotDisplayed()
             .enterNewValue('C').assertDropDownDisplayed()
         ;
@@ -59,7 +59,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
@@ -70,7 +70,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('C').assertSelectedSuggestion()
             .pressArrowDown().assertSelectedSuggestion('one')
             .pressArrowDown().assertSelectedSuggestion('two')
@@ -86,7 +86,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('C').assertSelectedSuggestion()
             .pressArrowUp().assertSelectedSuggestion('three')
             .pressArrowUp().assertSelectedSuggestion('two')
@@ -102,7 +102,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('cat').assertValue('cat');
     });
 
@@ -117,7 +117,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('cat').assertValue('cat');
     });
 
@@ -127,7 +127,7 @@ describe('AutoSuggest', () => {
             <AutoSuggest suggestions={fetchSuggestions} onSuggestion={onSuggestion}/>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('cat').assertDropDownDisplayed()
             .pressEscape().assertDropDownNotDisplayed()
     });
@@ -146,7 +146,7 @@ describe('AutoSuggest', () => {
             </AutoSuggest>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
@@ -169,7 +169,7 @@ describe('AutoSuggest', () => {
             </AutoSuggest>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('C').assertSuggestions(['one', 'two', 'three'])
         ;
     });
@@ -199,7 +199,7 @@ describe('AutoSuggest', () => {
             </AutoSuggest>
         );
 
-        new Asserter(autoSuggest)
+        asserter(autoSuggest)
             .enterNewValue('c').assertValue('c').assertSuggestions(['cow', 'cat', 'chicken'])
             .pressArrowDown().assertValue('cow')
             .pressArrowDown().assertValue('cat')
