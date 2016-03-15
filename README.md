@@ -3,7 +3,7 @@
 
 React auto-suggest component in ES6
 
-Check out the [demo](http://changeable-heart.surge.sh/)
+Check out the [demo](http://react-auto-suggest.surge.sh/)
 
 
 
